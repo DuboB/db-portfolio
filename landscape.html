@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landscape — db by Dubo Bulic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .nav-logo {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      color: var(--black);
+      text-decoration: none !important;
+      display: flex;
+      align-items: baseline;
+      gap: 0.2rem;
+      transition: color 0.3s;
+    }
+    .nav-logo-sub {
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: rgba(18,18,18,0.5);
+      text-decoration: none !important;
+    }
+    nav.hero-nav .nav-logo,
+    nav.hero-nav .nav-links a,
+    nav.hero-nav .nav-right a { color: var(--white); }
+    nav.hero-nav .nav-logo-sub { color: rgba(255,255,255,0.5); }
+    nav.hero-nav .burger span { background: var(--white); }
+
+    /* ── SLIDESHOW HERO ── */
+    .slide-hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #111;
+    }
+    .slide-hero .foto-slide {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0; z-index: 1;
+    }
+    .slide-hero .foto-slide.active { opacity: 1; z-index: 2; }
+    #sh-flash {
+      position: absolute; inset: 0; z-index: 5;
+      background: #fff; opacity: 0; pointer-events: none;
+    }
+    .slide-hero-text {
+      position: absolute;
+      bottom: 5vh; left: 2.5vw;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .slide-hero-text .hero-logo {
+      display: block;
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      letter-spacing: -0.05em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .slide-hero-text h1 {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+      letter-spacing: 0.25em;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.8);
+      margin-top: 0.5rem;
+    }
+
+    /* ── MASONRY GRID ── */
+    .ls-section { padding: 6px 0 0; }
+    .ls-grid {
+      columns: 3;
+      column-gap: 6px;
+    }
+    .ls-item {
+      break-inside: avoid;
+      margin-bottom: 6px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .ls-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0.92);
+      transition: transform 0.7s ease, filter 0.5s ease;
+    }
+    .ls-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+    @media (max-width: 760px) {
+      .ls-grid { columns: 2; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav" class="hero-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <!-- SLIDESHOW HERO -->
+  <div class="slide-hero" id="slide-hero">
+    <div class="foto-slide active" id="sh-a"></div>
+    <div class="foto-slide" id="sh-b"></div>
+    <div id="sh-flash"></div>
+    <div class="slide-hero-text">
+      <span class="hero-logo">db</span>
+      <h1 data-i18n="hero_title">Visual<br />Storytelling</h1>
+    </div>
+  </div>
+
+  <!-- PHOTO GRID -->
+  <div class="ls-section">
+    <div class="ls-grid" id="ls-grid"></div>
+  </div>
+
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    const lsFiles = [
+      '003 Dubrovnik AAA.jpg','1Y7A6937.jpg','1Y7A8345.jpg','1Y7A8609.jpg',
+      '20140120_152817000_iOS.jpg','20140120_163945000_iOS.jpg','20140120_165246000_iOS.jpg',
+      '20170327_125347630_iOS.jpg','20170327_152744172_iOS.jpg','20170328_200926354_iOS.jpg',
+      '20170330_114546036_iOS.jpg','20170330_121521883_iOS.jpg','20180827_093335163_iOS.jpg',
+      '2S1B7128.jpg','2S1B7257.jpg','2S1B7344 1.jpg','2S1B7482.jpg','2S1B7518.jpg',
+      '2S1B7596.jpg','2S1B7602.jpg','2S1B7621.jpg','2S1B7767.jpg','2S1B7777.jpg',
+      '2S1B7838.jpg','2S1B8020 1.jpg','2S1B8053.jpg','2S1B8072.jpg','2S1B8131.jpg',
+      '2S1B8200.jpg','2S1B8278.jpg','2S1B8329.jpg','2S1B8456.jpg','2S1B8467.jpg',
+      '2S1B8574.jpg','2S1B9078 2.jpg','2S1B9081.jpg','2S1B9099.jpg','2S1B9123.jpg',
+      '3333.jpg','444444.jpg','8.jpg','DBK.jpg',
+      'DSC00017-Bearbeitet Kopie.jpg','DSC00163-Bearbeitet Kopie.jpg','DSC00225-Bearbeitet Kopie.jpg',
+      'DSC00238-Bearbeitet Kopie.jpg','DSC00256-Bearbeitet Kopie.jpg','DSC00305-Bearbeitet Kopie.jpg',
+      'DSC00307-Bearbeitet Kopie.jpg','DSC00425-Bearbeitet Kopie.jpg','DSC00460-Bearbeitet Kopie.jpg',
+      'DSC00506-Bearbeitet Kopie.jpg','DSC00511-Bearbeitet Kopie.jpg','DSC00555-Bearbeitet Kopie.jpg',
+      'DSC00575-Bearbeitet Kopie.jpg','DSC00619-Bearbeitet Kopie.jpg','DSC00656-Bearbeitet Kopie.jpg',
+      'DSC00665-Bearbeitet Kopie.jpg','DSC00667-Bearbeitet Kopie.jpg','DSC00699-Bearbeitet Kopie.jpg',
+      'DSC00734-Bearbeitet Kopie.jpg','DSC00997.jpg','DSC01000.jpg','DSC01011.jpg',
+      'DSC01359.jpg','DSC01631.jpg','DSC01648.jpg','DSC02378.jpg','DSC02500.jpg',
+      'DSC03775.jpg','DSC03802.jpg','DSC03836.jpg',
+      'DSC04249DBK Selgelboot2.jpg','DSC04499jahta 01.jpg','DSC04499jahta 02.jpg',
+      'DSC05085.jpg','DSC05179.jpg','DSC05310.jpg',
+      'Dubrovnik 03.2008 sw-03-3.jpg','Dubrovnik 03.2008 sw-03-85.jpg','Dubrovnik 03.2008 sw-03-95.jpg',
+      'Dubrovnik75.jpg','Ocean_water_surface_202604092245.jpg','Person_walking_in_202604092247.jpg',
+      'Roma BBB54_RJsw (1).jpg','Roma BBB54_RJsw.jpg','Segelyacht_auf_dem_202604092246.jpg',
+      'Two_yachts_from_202604092244.jpg',
+      'Venezia 2006--9.jpg','Venezia 2006-085.jpg','Venezia 2006-1.jpg','Venezia 2006-193.jpg',
+      'Venezia 2006-255.jpg','Venezia 2006-593.jpg','Venezia06.jpg','Venezia22.jpg',
+      'Venice_Grand_Canal_202604092245.jpg',
+      '_MG_0032.jpg','_MG_0207.jpg','_MG_5113.jpg','_MG_8675.jpg',
+      'dbjoggen.jpg','dbk 2006 aug033sw.jpg','dbk 2006 aug058.jpg',
+      'realistic_und_scharf_202604092245.jpg','schwarz_weiss_202604092247.jpg',
+      'und_jetzt_eine_202604092246.jpg','without_gondole_objetiv_202604092245.jpg'
+    ].sort(() => Math.random() - 0.5);
+
+    /* ── SLIDESHOW ── */
+    const shA = document.getElementById('sh-a');
+    const shB = document.getElementById('sh-b');
+    const shFlash = document.getElementById('sh-flash');
+    let shAktiv = shA, shNaechst = shB, shIdx = 0;
+
+    function shShow(src) {
+      shNaechst.style.backgroundImage = `url('img/landscape/${encodeURIComponent(src)}')`;
+      shFlash.style.transition = 'none';
+      shFlash.style.opacity = '1';
+      shAktiv.classList.remove('active');
+      shNaechst.classList.add('active');
+      [shAktiv, shNaechst] = [shNaechst, shAktiv];
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        shFlash.style.transition = 'opacity 0.25s ease';
+        shFlash.style.opacity = '0';
+      }));
+    }
+    shShow(lsFiles[0]);
+    setInterval(() => { shIdx = (shIdx + 1) % lsFiles.length; shShow(lsFiles[shIdx]); }, 1000);
+
+    /* ── PHOTO GRID ── */
+    const grid = document.getElementById('ls-grid');
+    lsFiles.forEach((f, i) => {
+      const div = document.createElement('div');
+      div.className = 'ls-item' + (i % 7 === 3 ? ' tall' : '');
+      const img = document.createElement('img');
+      img.src = `img/landscape/${encodeURIComponent(f)}`;
+      img.alt = 'Landscape';
+      img.loading = 'lazy';
+      div.appendChild(img);
+      div.addEventListener('click', () => openLightbox(`img/landscape/${encodeURIComponent(f)}`));
+      grid.appendChild(div);
+    });
+
+    /* ── NAV SCROLL ── */
+    const slideHero = document.getElementById('slide-hero');
+    window.addEventListener('scroll', () => {
+      const n = document.getElementById('main-nav');
+      n.classList.toggle('hero-nav', slideHero.getBoundingClientRect().bottom > 80);
+    });
+  </script>
+</body>
+</html>

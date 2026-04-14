@@ -1,0 +1,25 @@
+# macOS resource forks
+._*
+.DS_Store
+
+# Zu große Videos für GitHub (über 100MB)
+video/hero.mp4
+video/backup/
+
+# Originale / Duplikate / Arbeitsordner (nicht für Website gebraucht)
+video/offen/
+
+video/woman.mp4
+video/ocean.mp4
+video/drone.mp4
+video/light.mp4
+video/auge.mov
+video/auge.drp
+video/taxi_berge_auge.mp4
+video/taxi_berge_auge_v2.mp4
+video/ocean_portfolio.mp4
+video/zoom_test_4sec.mp4
+video/zoom_final.mp4
+video/Eye_bw_7sec.mp4
+video/*_202604*.mp4
+video/*_202604*.mov

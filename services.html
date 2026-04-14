@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — db by Dubo Bulic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .nav-logo { font-family:'Assistant',sans-serif; font-weight:700; font-size:1.6rem; letter-spacing:0.04em; color:var(--black); text-decoration:none !important; display:flex; align-items:baseline; gap:0.2rem; transition:color 0.3s; }
+    .nav-logo-sub { font-weight:300; font-size:0.7rem; letter-spacing:0.12em; color:rgba(18,18,18,0.5); text-decoration:none !important; }
+
+    /* ── SERVICES PAGE ── */
+    .srv-page {
+      padding: 8rem 5vw 0;
+      background: #fff;
+    }
+
+    .srv-label {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: rgba(18,18,18,0.4);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .srv-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+      letter-spacing: 0.08em;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 5rem;
+    }
+
+    /* ── GRID ── */
+    .srv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(18,18,18,0.12);
+      margin: 0 -5vw;
+    }
+
+    .srv-box {
+      background: #fff;
+      padding: 4rem 5vw 5rem;
+    }
+
+    .srv-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      color: rgba(18,18,18,0.15);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.03em;
+      line-height: 1;
+    }
+
+    .srv-name {
+      font-family: 'Assistant', sans-serif;
+      font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 0.7rem;
+    }
+
+    .srv-desc {
+      font-family: 'Assistant', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(18,18,18,0.5);
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .srv-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .srv-list li {
+      font-family: 'Assistant', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(18,18,18,0.6);
+      padding: 0.85rem 0 0.85rem 1.6rem;
+      position: relative;
+      border-bottom: 1px solid rgba(18,18,18,0.08);
+    }
+
+    .srv-list li:first-child { border-top: 1px solid rgba(18,18,18,0.08); }
+
+    .srv-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: rgba(18,18,18,0.25);
+      font-size: 0.7rem;
+    }
+
+    /* ── ABOUT TEXT ── */
+    .srv-about {
+      padding: 8rem 0 2rem;
+      max-width: 820px;
+    }
+
+    .srv-about-label {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: rgba(18,18,18,0.4);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .srv-about-lead {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      line-height: 1.35;
+      color: var(--black);
+      margin-bottom: 3rem;
+      letter-spacing: 0.02em;
+    }
+
+    .srv-about-text {
+      font-family: 'Assistant', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(18,18,18,0.65);
+      line-height: 1.9;
+      margin-bottom: 1.6rem;
+    }
+
+    .srv-about-text strong {
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .srv-pillars {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem;
+      margin-top: 5rem;
+      padding-top: 3.5rem;
+      border-top: 1px solid rgba(18,18,18,0.1);
+    }
+
+    .srv-pillar-title {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 0.8rem;
+    }
+
+    .srv-pillar-text {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(18,18,18,0.5);
+      line-height: 1.8;
+    }
+
+    /* Mobile menu — schwarz auf weißer Seite */
+    .mobile-menu a { color: var(--black); }
+
+    @media (max-width: 760px) {
+      .srv-grid { grid-template-columns: 1fr; margin: 0 -5vw; }
+      .srv-pillars { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+      .srv-about { padding: 5rem 0 2rem; }
+    }
+    @media (max-width: 480px) {
+      .srv-pillars { grid-template-columns: 1fr; }
+      .srv-heading { font-size: clamp(3.5rem, 15vw, 5rem); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <div class="srv-page">
+
+    <p class="srv-label" data-i18n="srv_label">What I offer</p>
+    <h1 class="srv-heading" data-i18n="srv_heading">Services</h1>
+
+    <div class="srv-grid">
+
+      <div class="srv-box">
+        <div class="srv-num">01</div>
+        <p class="srv-name" data-i18n="srv1_name">Photography</p>
+        <p class="srv-desc" data-i18n="srv1_desc">Portrait, architecture, events and concerts.</p>
+        <ul class="srv-list">
+          <li data-i18n="srv1_1">Portrait &amp; People</li>
+          <li data-i18n="srv1_2">Architektur &amp; Interieur</li>
+          <li data-i18n="srv1_3">Event &amp; Konzert</li>
+          <li data-i18n="srv1_4">Hochzeit &amp; Feier</li>
+          <li data-i18n="srv1_5">Reise &amp; Dokumentation</li>
+        </ul>
+      </div>
+
+      <div class="srv-box">
+        <div class="srv-num">02</div>
+        <p class="srv-name" data-i18n="srv2_name">Design</p>
+        <p class="srv-desc" data-i18n="srv2_desc">Visual identity that works.</p>
+        <ul class="srv-list">
+          <li data-i18n="srv2_1">Logo &amp; Corporate Identity</li>
+          <li data-i18n="srv2_2">Print &amp; Editorial</li>
+          <li data-i18n="srv2_3">Web Design</li>
+          <li data-i18n="srv2_4">Social Media</li>
+        </ul>
+      </div>
+
+      <div class="srv-box">
+        <div class="srv-num">03</div>
+        <p class="srv-name" data-i18n="srv3_name">AI Images</p>
+        <p class="srv-desc" data-i18n="srv3_desc">Custom AI-generated visuals for any purpose.</p>
+        <ul class="srv-list">
+          <li data-i18n="srv3_1">Produktvisualisierung</li>
+          <li data-i18n="srv3_2">Konzeptbilder &amp; Storyboards</li>
+          <li data-i18n="srv3_3">Marketing &amp; Social Content</li>
+        </ul>
+      </div>
+
+      <div class="srv-box">
+        <div class="srv-num">04</div>
+        <p class="srv-name" data-i18n="srv4_name">Visual Storytelling</p>
+        <p class="srv-desc" data-i18n="srv4_desc">Moving images that tell your story.</p>
+        <ul class="srv-list">
+          <li data-i18n="srv4_1">Imagefilm &amp; Imagevideo</li>
+          <li data-i18n="srv4_2">Reels &amp; Social Content</li>
+          <li data-i18n="srv4_3">Konzert &amp; Event Video</li>
+          <li data-i18n="srv4_4">Drone &amp; Aerial</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ── ABOUT TEXT ── -->
+    <div class="srv-about reveal">
+      <p class="srv-about-label" data-i18n="srv_about_label">The full picture</p>
+      <p class="srv-about-lead" data-i18n="srv_about_lead">
+        I am a photographer, filmmaker and designer — helping you create a presence that truly gets noticed.
+      </p>
+      <p class="srv-about-text" data-i18n="srv_about_1">
+        Whether a single portrait or a complete visual identity — I accompany projects from the first idea to the finished result. My approach combines craftsmanship with a clear eye for the essential: what remains when you remove everything unnecessary.
+      </p>
+      <p class="srv-about-text" data-i18n="srv_about_2">
+        <strong>Photography</strong> is my foundation. For over 20 years I have photographed people, places and moments. Weddings, concerts, architecture, landscapes — always with the goal of making the real visible.
+      </p>
+      <p class="srv-about-text" data-i18n="srv_about_3">
+        <strong>Video & Visual Storytelling</strong> extends photography where a single image is not enough. Brand films, social media reels, event videos, drone footage — moving images that tell a story and stay in the memory.
+      </p>
+      <p class="srv-about-text" data-i18n="srv_about_4">
+        <strong>Websites & digital presence</strong> are the window to the outside. I build websites that not only look good but also work — fast, clear, with a visual language that fits the brief.
+      </p>
+      <p class="srv-about-text" data-i18n="srv_about_5">
+        <strong>Presence & identity</strong> — logo, design, business card, social media or a complete corporate design: I help you develop a consistent image you can present to the world with confidence.
+      </p>
+
+      <div class="srv-pillars">
+        <div>
+          <p class="srv-pillar-title" data-i18n="srv_p1_title">Fotografie</p>
+          <p class="srv-pillar-text" data-i18n="srv_p1_text">Portrait · Hochzeit · Event · Architektur · Reise</p>
+        </div>
+        <div>
+          <p class="srv-pillar-title" data-i18n="srv_p2_title">Video</p>
+          <p class="srv-pillar-text" data-i18n="srv_p2_text">Imagefilm · Reels · Konzert · Drone</p>
+        </div>
+        <div>
+          <p class="srv-pillar-title" data-i18n="srv_p3_title">Webseiten</p>
+          <p class="srv-pillar-text" data-i18n="srv_p3_text">Design · Entwicklung · Hosting · Pflege</p>
+        </div>
+        <div>
+          <p class="srv-pillar-title" data-i18n="srv_p4_title">Auftritt</p>
+          <p class="srv-pillar-text" data-i18n="srv_p4_text">Logo · Corporate Design · Social Media · Print</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+</body>
+</html>

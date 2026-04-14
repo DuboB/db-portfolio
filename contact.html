@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — db by Dubo Bulic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .nav-logo { font-family:'Assistant',sans-serif; font-weight:700; font-size:1.6rem; letter-spacing:0.04em; color:var(--black); text-decoration:none !important; display:flex; align-items:baseline; gap:0.2rem; transition:color 0.3s; }
+    .nav-logo-sub { font-weight:300; font-size:0.7rem; letter-spacing:0.12em; color:rgba(18,18,18,0.5); text-decoration:none !important; }
+
+    /* ── CONTACT PAGE ── */
+    .contact-page {
+      min-height: 100vh;
+      background: #fff;
+      padding: 10rem 5vw 6rem;
+    }
+
+    .contact-label {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: rgba(18,18,18,0.4);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 0.12em;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 4rem;
+    }
+
+    .contact-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: start;
+    }
+
+    /* ── FORM ── */
+    .contact-form { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-field label {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: rgba(18,18,18,0.45);
+      text-transform: uppercase;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(18,18,18,0.2);
+      padding: 0.6rem 0;
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-bottom-color: var(--black);
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(18,18,18,0.3);
+    }
+
+    .form-field select { cursor: pointer; color: rgba(18,18,18,0.3); }
+    .form-field select.filled { color: var(--black); }
+
+    .form-field textarea {
+      resize: none;
+      height: 100px;
+      line-height: 1.6;
+    }
+
+    .form-submit {
+      margin-top: 0.5rem;
+      padding: 1rem 2rem;
+      background: transparent;
+      border: 1px solid rgba(18,18,18,0.25);
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .form-submit:hover {
+      background: var(--black);
+      color: #fff;
+      border-color: var(--black);
+    }
+
+    /* ── RIGHT COLUMN ── */
+    .contact-right { display: flex; flex-direction: column; gap: 2.5rem; }
+
+    .contact-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .contact-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(1) brightness(0.95);
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .info-item {}
+
+    .info-label {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: rgba(18,18,18,0.4);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--black);
+    }
+
+    .info-value a {
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .info-value a:hover { text-decoration: underline; }
+
+    /* Mobile menu — schwarz auf weißer Seite */
+    .mobile-menu a { color: var(--black); }
+
+    @media (max-width: 760px) {
+      .contact-body { grid-template-columns: 1fr; }
+      .contact-page { padding: 8rem 5vw 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <div class="contact-page">
+    <p class="contact-label" data-i18n="contact_label">Let's talk</p>
+    <h1 class="contact-heading" data-i18n="contact_heading">Contact</h1>
+
+    <div class="contact-body">
+
+      <!-- FORM -->
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-field">
+          <label data-i18n="form_name">Name</label>
+          <input type="text" data-i18n-ph="form_name_ph" placeholder="Your name" required />
+        </div>
+        <div class="form-field">
+          <label data-i18n="form_email">E-Mail</label>
+          <input type="email" data-i18n-ph="form_email_ph" placeholder="your@email.com" required />
+        </div>
+        <div class="form-field">
+          <label data-i18n="form_subject">Subject</label>
+          <select id="subject-select" onchange="this.classList.toggle('filled', this.value !== '')">
+            <option value="" data-i18n="form_subject_ph">Please select …</option>
+            <option data-i18n="form_subj_1">Photography</option>
+            <option data-i18n="form_subj_2">Wedding</option>
+            <option data-i18n="form_subj_3">Portrait / People</option>
+            <option data-i18n="form_subj_4">Golf</option>
+            <option data-i18n="form_subj_5">Architecture</option>
+            <option data-i18n="form_subj_6">Landscape</option>
+            <option data-i18n="form_subj_7">Video / Projects</option>
+            <option data-i18n="form_subj_8">Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label data-i18n="form_message">Message</label>
+          <textarea data-i18n-ph="form_message_ph" placeholder="Describe your project …" required></textarea>
+        </div>
+        <button type="submit" class="form-submit" data-i18n="form_send">Send Message</button>
+      </form>
+
+      <!-- RIGHT COLUMN -->
+      <div class="contact-right">
+        <div class="contact-photo">
+          <img src="img/dubo-contact.jpg" alt="Dubo Bulic" />
+        </div>
+        <div class="contact-info">
+          <div class="info-item">
+            <p class="info-label" data-i18n="info_email_label">E-Mail</p>
+            <p class="info-value"><a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a></p>
+          </div>
+          <div class="info-item">
+            <p class="info-label" data-i18n="info_mobile_label">Mobile</p>
+            <p class="info-value"><a href="tel:+491708555427">+49 170 855 5427</a></p>
+          </div>
+          <div class="info-item">
+            <p class="info-label" data-i18n="info_location_label">Location</p>
+            <p class="info-value" data-i18n="info_location_val">Heidelberg — Dubrovnik</p>
+          </div>
+          <div class="info-item">
+            <p class="info-label" data-i18n="info_response_label">Response time</p>
+            <p class="info-value" data-i18n="info_response_val">Within 24 hours</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = 'Message sent ✓';
+      btn.style.background = 'var(--black)';
+      btn.style.color = '#fff';
+      btn.disabled = true;
+    }
+  </script>
+</body>
+</html>

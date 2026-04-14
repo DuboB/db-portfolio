@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — db Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    /* ── SLIDESHOW HERO ── */
+    .slide-hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #111;
+    }
+    .slide-hero .foto-slide {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0; z-index: 1;
+    }
+    .slide-hero .foto-slide.active { opacity: 1; z-index: 2; }
+    #sh-flash {
+      position: absolute; inset: 0; z-index: 5;
+      background: #fff; opacity: 0; pointer-events: none;
+    }
+    .slide-hero-text {
+      position: absolute;
+      bottom: 5vh; left: 2.5vw;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .slide-hero-text .hero-logo {
+      display: block;
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      letter-spacing: -0.05em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .slide-hero-text h1 {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-top: 0.5rem;
+    }
+
+    /* ── CATEGORY GRID ── */
+    .cat-section {
+      padding: 6px 0 0;
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 60vh 45vh 60vh;
+      gap: 6px;
+    }
+    .cat-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+    }
+    .cat-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.75);
+      transition: transform 0.8s ease, filter 0.6s ease;
+    }
+    .cat-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(0.9);
+    }
+    .cat-item.full { grid-column: span 2; }
+    .cat-label {
+      position: absolute;
+      bottom: 2.5rem; left: 2.5rem;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .cat-label span {
+      display: block;
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+    }
+    .cat-label small {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.4rem;
+    }
+    .cat-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    @media (max-width: 760px) {
+      .cat-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .cat-item, .cat-item.full { grid-column: span 1; height: 55vw; }
+    }
+  </style>
+  <style>
+    .nav-logo {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      color: var(--black);
+      text-decoration: none !important;
+      display: flex;
+      align-items: baseline;
+      gap: 0.2rem;
+      transition: color 0.3s;
+    }
+    .nav-logo-sub {
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: rgba(18,18,18,0.5);
+      text-decoration: none !important;
+    }
+    nav.hero-nav .nav-logo,
+    nav.hero-nav .nav-links a,
+    nav.hero-nav .nav-right a { color: var(--white); }
+    nav.hero-nav .nav-logo-sub { color: rgba(255,255,255,0.5); }
+    nav.hero-nav .burger span { background: var(--white); }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav" class="hero-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <!-- SLIDESHOW HERO -->
+  <div class="slide-hero" id="slide-hero">
+    <div class="foto-slide active" id="sh-a"></div>
+    <div class="foto-slide" id="sh-b"></div>
+    <div id="sh-flash"></div>
+    <div class="slide-hero-text">
+      <span class="hero-logo">db</span>
+      <h1 data-i18n="hero_title">Visual<br />Storytelling</h1>
+    </div>
+  </div>
+
+  <!-- CATEGORY GRID -->
+  <div class="cat-section">
+    <div class="cat-grid">
+      <a class="cat-item" href="people.html">
+        <img src="img/hauptseite/Man_portrait_intense_202604092247.jpg" alt="People" />
+        <div class="cat-label"><span>People</span><small>Portrait Photography</small></div>
+      </a>
+      <a class="cat-item" href="landscape.html">
+        <img src="img/hauptseite/Venice_Grand_Canal_202604092245.jpg" alt="Landscape" />
+        <div class="cat-label"><span>Landscape</span><small>Travel & Places</small></div>
+      </a>
+      <a class="cat-item full" href="architektur.html">
+        <img src="img/hauptseite/Dubrovnik 03.2008 sw-03-85.jpg" alt="Architektur" />
+        <div class="cat-label"><span>Architektur</span><small>Architecture & Structure</small></div>
+      </a>
+      <a class="cat-item" href="golf.html">
+        <img src="img/hauptseite/Golf St. Leon Rot 2-7911.jpg" alt="Golf" />
+        <div class="cat-label"><span>Golf</span><small>Sport & Lifestyle</small></div>
+      </a>
+      <a class="cat-item" href="wedding.html">
+        <img src="img/hauptseite/1Y7A4057.jpg" alt="Wedding" />
+        <div class="cat-label"><span>Wedding</span><small>Moments & Emotions</small></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <footer>
+    <span>© 2026 db Design</span>
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    /* ── SLIDESHOW 1 SEK ── */
+    const shFiles = [
+      '-Bearbeitet-14.jpg','-Bearbeitet-2-2.jpg','-Bearbeitet-2-3.jpg',
+      '1Y7A0980-2.jpg','1Y7A4057.jpg','1Y7A6898.jpg','1Y7A7067.jpg',
+      '1Y7A7314.jpg','1Y7A7753.jpg',
+      '2S1B7128.jpg','2S1B7280.jpg','2S1B8130.jpg','2S1B9082 Kopie 1.jpg',
+      'DSC00163-Bearbeitet.jpg','DSC00979.jpg','DSC01044.jpg',
+      'Dubrovnik 03.2008 sw-03-3.jpg','Dubrovnik 03.2008 sw-03-49.jpg','Dubrovnik 03.2008 sw-03-85.jpg','Dubrovnik75.jpg',
+      'Golf St. Leon Rot 2-7911.jpg',
+      'Man_in_suit_202604092247.jpg','Man_portrait_intense_202604092247.jpg','Man_with_stubble_202604092247.jpg',
+      'Roma BBB54_RJsw.jpg','Sailing_yacht_sunset_202604092244.jpg','Segelyacht_auf_dem_202604092246.jpg',
+      'Venezia 2006--9.jpg','Venezia 2006-193.jpg','Venezia06.jpg','Venice_Grand_Canal_202604092245.jpg',
+      'Young_woman_in_202604092246.jpg',
+      'das_bild_perfekt_202604092248.jpg','in_gelb_und_202604092245.jpg',
+      'julianrachlin bearb. (1034 von 1081)-2.jpg','julianrachlin bearb. (617 von 1081).jpg',
+      'schwarz_weiss_202604092247.jpg'
+    ].sort(() => Math.random() - 0.5);
+
+    let shIdx = 0;
+    const shA = document.getElementById('sh-a');
+    const shB = document.getElementById('sh-b');
+    const shFlash = document.getElementById('sh-flash');
+    let shAktiv = shA, shNaechst = shB;
+
+    function shShow(src) {
+      shNaechst.style.backgroundImage = `url('img/hauptseite/${encodeURIComponent(src)}')`;
+      shFlash.style.transition = 'none';
+      shFlash.style.opacity = '1';
+      shAktiv.classList.remove('active');
+      shNaechst.classList.add('active');
+      [shAktiv, shNaechst] = [shNaechst, shAktiv];
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        shFlash.style.transition = 'opacity 0.25s ease';
+        shFlash.style.opacity = '0';
+      }));
+    }
+
+    shShow(shFiles[0]);
+    setInterval(() => {
+      shIdx = (shIdx + 1) % shFiles.length;
+      shShow(shFiles[shIdx]);
+    }, 1000);
+
+    /* ── NAV scroll (slide-hero statt hero) ── */
+    const slideHero = document.getElementById('slide-hero');
+    window.addEventListener('scroll', () => {
+      const n = document.getElementById('main-nav');
+      if (slideHero.getBoundingClientRect().bottom > 80) {
+        n.classList.add('hero-nav');
+      } else {
+        n.classList.remove('hero-nav');
+      }
+    });
+  </script>
+</body>
+</html>

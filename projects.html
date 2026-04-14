@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — db by Dubo Bulic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .nav-logo { font-family:'Assistant',sans-serif; font-weight:700; font-size:1.6rem; letter-spacing:0.04em; color:var(--black); text-decoration:none !important; display:flex; align-items:baseline; gap:0.2rem; transition:color 0.3s; }
+    .nav-logo-sub { font-weight:300; font-size:0.7rem; letter-spacing:0.12em; color:rgba(18,18,18,0.5); text-decoration:none !important; }
+    nav.hero-nav .nav-logo, nav.hero-nav .nav-links a, nav.hero-nav .nav-right a { color:var(--white); }
+    nav.hero-nav .nav-logo-sub { color:rgba(255,255,255,0.5); }
+    nav.hero-nav .burger span { background:var(--white); }
+
+    /* ── VIDEO HERO ── */
+    .video-hero { position:relative; width:100%; height:100vh; overflow:hidden; background:#111; }
+    .video-hero video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.6s ease; }
+    .video-hero video.active { opacity:1; }
+    .video-hero-text { position:absolute; bottom:5vh; left:2.5vw; z-index:10; pointer-events:none; }
+    .video-hero-text .hero-logo { display:block; font-family:'Assistant',sans-serif; font-weight:700; font-size:clamp(3.5rem,8vw,7rem); letter-spacing:-0.05em; color:var(--white); line-height:1; }
+    .video-hero-text h1 { font-family:'Assistant',sans-serif; font-weight:600; font-size:clamp(0.65rem,1.2vw,0.85rem); letter-spacing:0.25em; line-height:1.4; color:rgba(255,255,255,0.8); margin-top:0.5rem; }
+
+    /* ── VIDEO GRID ── */
+    .projects-section { padding:6px 0 0; }
+    .projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+    .projects-item { overflow:hidden; cursor:pointer; position:relative; aspect-ratio:16/9; background:#111; }
+    .projects-item video { width:100%; height:100%; object-fit:cover; display:block; filter:brightness(0.88); transition:transform 0.7s ease, filter 0.5s ease; }
+    .projects-item:hover video { transform:scale(1.04); filter:brightness(1); }
+    @media (max-width:760px) { .projects-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:480px) { .projects-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav" class="hero-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <!-- VIDEO HERO -->
+  <div class="video-hero" id="video-hero">
+    <video id="vh-0" src="video/v01_woman.mp4" muted playsinline></video>
+    <video id="vh-1" src="video/v02_eye.mp4" muted playsinline></video>
+    <video id="vh-2" src="video/v03_flower.mp4" muted playsinline></video>
+    <video id="vh-3" src="video/v04_drone.mp4" muted playsinline></video>
+    <video id="vh-4" src="video/v05_ocean.mp4" muted playsinline></video>
+    <video id="vh-5" src="video/v06_ny.mp4" muted playsinline></video>
+    <div class="video-hero-text">
+      <span class="hero-logo">db</span>
+      <h1 data-i18n="hero_title">Visual<br />Storytelling</h1>
+    </div>
+  </div>
+
+  <!-- VIDEO GRID -->
+  <div class="projects-section">
+    <div class="projects-grid" id="projects-grid">
+      <div class="projects-item">
+        <video src="video/v01_woman.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="projects-item">
+        <video src="video/v02_eye.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="projects-item">
+        <video src="video/v03_flower.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="projects-item">
+        <video src="video/v04_drone.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="projects-item">
+        <video src="video/v05_ocean.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="projects-item">
+        <video src="video/v06_ny.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    /* ── VIDEO HERO CYCLING ── */
+    const vhVideos = Array.from(document.querySelectorAll('.video-hero video'));
+    let vhIdx = 0;
+    vhVideos[0].classList.add('active');
+    vhVideos[0].play();
+    vhVideos[0].addEventListener('ended', cycleHero);
+    function cycleHero() {
+      vhVideos[vhIdx].classList.remove('active');
+      vhIdx = (vhIdx + 1) % vhVideos.length;
+      const next = vhVideos[vhIdx];
+      next.currentTime = 0;
+      next.play();
+      next.classList.add('active');
+      next.addEventListener('ended', cycleHero, { once: true });
+    }
+
+    /* ── NAV SCROLL ── */
+    const videoHero = document.getElementById('video-hero');
+    window.addEventListener('scroll', () => {
+      const n = document.getElementById('main-nav');
+      n.classList.toggle('hero-nav', videoHero.getBoundingClientRect().bottom > 80);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>db — Photography & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #121212;
+      --white: #ffffff;
+      --grey:  #545859;
+      --light: #f5f5f5;
+      --gap:   6px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 400;
+      background: var(--white);
+      color: var(--black);
+      font-size: 1rem;
+      line-height: 1.6;
+      overflow-x: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .nav-logo { text-transform: none !important; letter-spacing: 0.04em !important; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 1.4rem 2.5vw;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(18,18,18,0.07);
+      transition: background 0.3s;
+    }
+
+    nav.hero-nav {
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .nav-logo {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      color: var(--black);
+      text-decoration: none !important;
+      display: flex;
+      align-items: baseline;
+      gap: 0.2rem;
+      transition: color 0.3s;
+    }
+
+    .nav-logo-sub {
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+
+      color: rgba(18,18,18,0.5);
+      text-decoration: none !important;
+    }
+
+    nav.hero-nav .nav-logo,
+    nav.hero-nav .nav-links a,
+    nav.hero-nav .nav-right a { color: var(--white); }
+
+    nav.hero-nav .nav-logo-sub { color: rgba(255,255,255,0.5); }
+
+
+    nav.hero-nav .burger span { background: var(--white); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      justify-content: flex-start;
+    }
+
+    .nav-links a, .nav-right a {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+
+      text-decoration: none;
+      color: var(--black);
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1px;
+      background: var(--black);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+
+    .nav-right {
+      display: flex;
+      justify-content: flex-end;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    /* ── HERO SLIDESHOW ── */
+    .hero {
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    .hero-video.active { opacity: 1; }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center top;
+      opacity: 0;
+      transform: scale(1.08);
+      transition: opacity 1.5s ease, transform 7s ease;
+    }
+
+    .slide.active { opacity: 1; transform: scale(1.0); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(18,18,18,0.15) 0%,
+        rgba(18,18,18,0.05) 40%,
+        rgba(18,18,18,0.45) 100%);
+      z-index: 2;
+    }
+
+    .hero-text {
+      position: absolute;
+      bottom: 5vh;
+      left: 2.5vw;
+      z-index: 3;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-text .hero-logo {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      letter-spacing: -0.03em;
+      color: var(--white);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-text h1 {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+      letter-spacing: 0.25em;
+
+      line-height: 1.4;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .hero-dots {
+      position: absolute;
+      bottom: 5vh;
+      right: 2.5vw;
+      z-index: 3;
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+    }
+
+    .hero-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    /* ── FOTO SLIDESHOW ── */
+    .foto-show {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      overflow: hidden;
+      background: #111;
+    }
+    .foto-slide {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0; z-index: 1;
+      animation: kbFoto 8s ease-in-out forwards;
+    }
+    .foto-slide.active { opacity: 1; z-index: 2; }
+    @keyframes kbFoto {
+      from { transform: scale(1); }
+      to   { transform: scale(1.06); }
+    }
+    #fs-flash {
+      position: absolute; inset: 0; z-index: 5;
+      background: #fff; opacity: 0; pointer-events: none;
+    }
+
+    .hero-dot.active {
+      background: var(--white);
+      transform: scale(1.5);
+    }
+
+    /* ── SECTION LABELS ── */
+    .section-label {
+      padding: 4rem 2.5vw 1.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+
+    .section-label h2 {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      letter-spacing: 0.12em;
+
+    }
+
+    .section-label span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+
+      color: var(--grey);
+    }
+
+    /* ── EDITORIAL GRID ── */
+    /* ── EDITORIAL BLOCKS ── */
+    .block-2p {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gap);
+    }
+
+    .block-3p {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--gap);
+    }
+
+    .block-full {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .media-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .media-item img, .media-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+
+    .media-item:hover img,
+    .media-item:hover video { transform: scale(1.03); }
+
+    .media-item img { cursor: zoom-in; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      cursor: zoom-out;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+      transform: scale(0.92);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      cursor: zoom-out;
+    }
+    .lightbox.open img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 2;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: #fff; }
+
+    /* Portrait aspect ratio */
+    .ratio-portrait { aspect-ratio: 4/5; }
+    .ratio-portrait img { object-position: center 15%; }
+    /* Landscape */
+    .ratio-landscape { aspect-ratio: 16/9; }
+    /* Square */
+    .ratio-square { aspect-ratio: 1; }
+    /* Tall portrait */
+    .ratio-tall { aspect-ratio: 3/4; }
+
+    .media-caption {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(18,18,18,0.35);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .media-item:hover .media-caption { opacity: 1; }
+
+    .media-caption span {
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+
+    }
+
+    .media-item.video-item::before {
+      content: '▶';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 1.5rem;
+      z-index: 2;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* ── SPACER ── */
+    .spacer { height: 2rem; }
+    .spacer-lg { height: 5rem; }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      background: var(--black);
+      color: var(--white);
+      padding: 6rem 2.5vw;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+      margin: 6px;
+    }
+
+    .about-strip h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: 0.03em;
+    }
+
+    .about-strip p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-strip .cta-link {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      padding-bottom: 2px;
+      transition: border-color 0.3s;
+    }
+
+    .about-strip .cta-link:hover { border-color: var(--white); }
+
+    /* ── CONTACT STRIP ── */
+    .contact-strip {
+      text-align: center;
+      padding: 8rem 2.5vw;
+    }
+
+    .contact-strip h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      margin-bottom: 2rem;
+    }
+
+    .contact-strip a {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--black);
+      padding-bottom: 3px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 2.5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(18,18,18,0.1);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+
+      color: var(--grey);
+    }
+
+    footer a { color: var(--grey); text-decoration: none; }
+    footer a:hover { color: var(--black); }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: scale(0.91) translateY(35px);
+      transition: opacity 1.6s cubic-bezier(0.16,1,0.3,1), transform 1.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: scale(1) translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 960px) {
+      nav { grid-template-columns: auto 1fr auto; padding: 1.2rem 4vw; }
+      .nav-links { display: none; }
+      .nav-logo { font-size: 1.8rem; }
+      .nav-right { gap: 1.2rem; }
+      .nav-right li:not(:last-child) { display: none; }
+      .section-label { padding: 3rem 4vw 1rem; }
+      .hero-text .hero-logo { font-size: clamp(2.5rem, 12vw, 5rem); }
+      .hero-text h1 { font-size: 0.7rem; letter-spacing: 0.2em; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .hero-text { left: 4vw; bottom: 4vh; }
+      .hero-dots { right: 4vw; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .block-2p { grid-template-columns: 1fr; }
+      .ratio-portrait { aspect-ratio: 4/5; }
+      .media-item img, .media-item video { object-position: center center; }
+      .services-grid { grid-template-columns: 1fr; }
+      .services-section { padding: 3.5rem 4vw 4rem; }
+    }
+
+    /* ── BURGER MENU ── */
+    .burger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--black);
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0; right: -100%;
+      width: 75vw;
+      height: 100vh;
+      background: transparent;
+      z-index: 300;
+      padding: 5rem 2rem 3rem;
+      transition: right 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+    }
+
+    .mobile-menu.open { right: 0; }
+
+    .mobile-menu a {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+
+      text-decoration: none;
+      color: var(--white);
+      padding: 1.2rem 0;
+      border-bottom: none;
+    }
+
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 250;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+    }
+
+    .mobile-overlay.open { opacity: 1; pointer-events: all; }
+
+    @media (max-width: 960px) {
+      .burger { display: flex; }
+    }
+
+    nav.hero-nav .burger span { background: var(--white); }
+
+    /* ── PORTFOLIO GRID ── */
+    .port-grid-section {
+      padding: 5rem 2.5vw 2rem;
+      background: var(--white);
+    }
+    .port-grid-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+
+      color: var(--grey);
+      margin-bottom: 0.5rem;
+    }
+    .port-grid-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 3rem;
+    }
+    .port-gallery { columns: 3; column-gap: 6px; }
+    .port-item { break-inside: avoid; margin-bottom: 6px; overflow: hidden; cursor: zoom-in; }
+    .port-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0.92);
+      transition: transform 0.7s ease, filter 0.5s ease;
+    }
+    .port-item:hover img { transform: scale(1.04); filter: brightness(1); }
+    @media (max-width: 760px) { .port-gallery { columns: 2; } }
+    @media (max-width: 560px) { .port-grid-section { padding: 3rem 4vw 1rem; } }
+
+    /* ── LIGHTBOX (Portfolio) ── */
+    .port-lb {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.93);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      cursor: zoom-out;
+    }
+    .port-lb.open { opacity: 1; pointer-events: all; }
+    .port-lb img {
+      max-width: 92vw; max-height: 92vh; object-fit: contain;
+      transform: scale(0.85); opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+    }
+    .port-lb.open img { transform: scale(1); opacity: 1; }
+
+    /* ── SERVICES ── */
+    .services-section {
+      background: #121212;
+      color: #fff;
+      padding: 6rem 2.5vw 7rem;
+      margin: 6px 0;
+    }
+
+    .services-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1.2rem;
+    }
+
+    .services-title {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      letter-spacing: 0.1em;
+
+      margin-bottom: 5rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .service-item {
+      padding: 2rem 2.5rem 3rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .service-num {
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.18);
+      margin-bottom: 3rem;
+      line-height: 1;
+    }
+
+    .service-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 960px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .services-section { padding: 4rem 4vw 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="main-nav" class="hero-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <!-- HERO VIDEOS -->
+  <section class="hero" id="hero">
+    <video class="hero-video active" id="hv0" autoplay muted playsinline><source src="video/v01_woman.mp4" type="video/mp4"></video>
+    <video class="hero-video" id="hv1" muted playsinline><source src="video/v02_eye.mp4" type="video/mp4"></video>
+    <video class="hero-video" id="hv2" muted playsinline><source src="video/v03_flower.mp4" type="video/mp4"></video>
+    <video class="hero-video" id="hv3" muted playsinline><source src="video/v04_drone.mp4" type="video/mp4"></video>
+    <video class="hero-video" id="hv4" muted playsinline><source src="video/v05_ocean.mp4" type="video/mp4"></video>
+    <video class="hero-video" id="hv5" muted playsinline><source src="video/v06_ny.mp4" type="video/mp4"></video>
+    <video class="hero-video" id="hv6" muted playsinline><source src="video/v07_auge.mp4" type="video/mp4"></video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-text">
+      <span class="hero-logo">db</span>
+      <h1 data-i18n="hero_title">Visual<br />Storytelling</h1>
+    </div>
+  </section>
+
+  <!-- FOTO SLIDESHOW -->
+  <section class="foto-show" id="foto-show">
+    <div class="foto-slide active" id="fs-a"></div>
+    <div class="foto-slide" id="fs-b"></div>
+    <div id="fs-flash"></div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <div class="services-section reveal" id="services">
+    <p class="services-label">What I offer</p>
+    <h2 class="services-title">Services</h2>
+    <div class="services-grid">
+      <div class="service-item reveal">
+        <div class="service-num">01</div>
+        <div class="service-name">Photography</div>
+        <p class="service-desc">Portrait, architecture, events and concerts. Analog thinking, digitally perfected. For agencies, companies and private clients.</p>
+      </div>
+      <div class="service-item reveal">
+        <div class="service-num">02</div>
+        <div class="service-name">Design</div>
+        <p class="service-desc">Visual identity that works. From concept to final file – consistent, clear, impactful.</p>
+      </div>
+      <div class="service-item reveal">
+        <div class="service-num">03</div>
+        <div class="service-name">AI Images</div>
+        <p class="service-desc">Custom AI-generated visuals for marketing, social media, print and web. Fast, scalable, unique.</p>
+      </div>
+      <div class="service-item reveal">
+        <div class="service-num">04</div>
+        <div class="service-name">Web Hosting</div>
+        <p class="service-desc">Professional hosting for small and medium projects. Reliable, secure and hassle-free.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PORTFOLIO GRID ── -->
+  <div class="port-grid-section reveal">
+    <p class="port-grid-label">Selected Work</p>
+    <h2 class="port-grid-title">Portfolio</h2>
+    <div class="port-gallery" id="port-gallery"></div>
+  </div>
+
+  <!-- ── LIGHTBOX ── -->
+  <div class="port-lb" id="port-lb">
+    <img id="port-lb-img" src="" alt="" />
+  </div>
+
+  <!-- ── CONTACT ── -->
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:kontakt@db-design.at">kontakt@db-design.at</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+    <div style="display:flex;gap:2rem;">
+      <a href="#">Impressum</a>
+      <a href="#">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    /* ── HERO VIDEO CYCLING ── */
+    const heroVideos = Array.from(document.querySelectorAll('.hero-video'));
+    let hvIdx = 0;
+
+    function nextHeroVideo() {
+      heroVideos[hvIdx].classList.remove('active');
+      hvIdx = (hvIdx + 1) % heroVideos.length;
+      const next = heroVideos[hvIdx];
+      next.currentTime = 0;
+      next.play();
+      next.classList.add('active');
+    }
+
+    heroVideos[0].play();
+    heroVideos.forEach(v => v.addEventListener('ended', nextHeroVideo));
+
+    /* ── FOTO SLIDESHOW ── */
+    const fotoImgs = [
+      'img/slideshow/-Bearbeitet-14.jpg',
+      'img/slideshow/-Bearbeitet-2-2.jpg',
+      'img/slideshow/-Bearbeitet-2-3.jpg',
+      'img/slideshow/1Y7A0980-2.jpg',
+      'img/slideshow/1Y7A4057.jpg',
+      'img/slideshow/1Y7A6898.jpg',
+      'img/slideshow/1Y7A7067.jpg',
+      'img/slideshow/2S1B7128.jpg',
+      'img/slideshow/2S1B7280.jpg',
+      'img/slideshow/2S1B8130.jpg',
+      'img/slideshow/2S1B9082 Kopie 1.jpg',
+      'img/slideshow/DSC00163-Bearbeitet.jpg',
+      'img/slideshow/DSC01044.jpg',
+      'img/slideshow/Dubrovnik 03.2008 sw-03-49.jpg',
+      'img/slideshow/Dubrovnik 03.2008 sw-03-85.jpg',
+      'img/slideshow/Golf St. Leon Rot 2-7911.jpg',
+      'img/slideshow/Kopie_von_\u201EPiazza_202604092244.jpg',
+      'img/slideshow/Man_in_suit_202604092247.jpg',
+      'img/slideshow/Man_portrait_intense_202604092247.jpg',
+      'img/slideshow/Man_with_beard_202604092248.jpg',
+      'img/slideshow/Man_with_stubble_202604092247.jpg',
+      'img/slideshow/Ocean_water_surface_202604092245.jpg',
+      'img/slideshow/Person_walking_in_202604092247.jpg',
+      'img/slideshow/Sailing_yacht_sunset_202604092244.jpg',
+      'img/slideshow/Schwarz_weiss_mit_202604092243.jpg',
+      'img/slideshow/Schwarz_wei\xDF_portraits_202604092242 (1).jpg',
+      'img/slideshow/Segelyacht_auf_dem_202604092246.jpg',
+      'img/slideshow/Two_yachts_from_202604092244.jpg',
+      'img/slideshow/Venezia06.jpg',
+      'img/slideshow/Venice_Grand_Canal_202604092245.jpg',
+      'img/slideshow/Young_woman_in_202604092246.jpg',
+      'img/slideshow/Young_woman_on_202604092246.jpg',
+      'img/slideshow/das_bild_perfekt_202604092248.jpg',
+      'img/slideshow/ein_foto_daraus_202604092244.jpg',
+      'img/slideshow/image.png_202604092248.jpg',
+      'img/slideshow/in_gelb_und_202604092245.jpg',
+      'img/slideshow/julianrachlin bearb. (617 von 1081).jpg',
+      'img/slideshow/realistic_und_scharf_202604092245.jpg',
+      'img/slideshow/schwarz_weiss_202604092247.jpg',
+      'img/slideshow/und_jetzt_eine_202604092246.jpg',
+      'img/slideshow/without_gondole_objetiv_202604092245.jpg',
+    ].sort(() => Math.random() - 0.5);
+
+    let fsIdx = 0;
+    let fsA = document.getElementById('fs-a');
+    let fsB = document.getElementById('fs-b');
+    let fsAktiv = fsA, fsNaechst = fsB;
+    const fsFlash = document.getElementById('fs-flash');
+
+    function fsShow(url) {
+      fsNaechst.style.backgroundImage = `url('${url}')`;
+      fsFlash.style.transition = 'none';
+      fsFlash.style.opacity = '1';
+      fsAktiv.classList.remove('active');
+      fsNaechst.classList.add('active');
+      [fsAktiv, fsNaechst] = [fsNaechst, fsAktiv];
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        fsFlash.style.transition = 'opacity 0.5s ease';
+        fsFlash.style.opacity = '0';
+      }));
+    }
+
+    fsA.style.backgroundImage = `url('${fotoImgs[0]}')`;
+    fsA.classList.add('active');
+
+    setInterval(() => {
+      fsIdx = (fsIdx + 1) % fotoImgs.length;
+      fsShow(fotoImgs[fsIdx]);
+    }, 3000);
+
+    /* ── NAV scroll ── */
+    const nav = document.getElementById('main-nav');
+    const hero = document.getElementById('hero');
+
+    window.addEventListener('scroll', () => {
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      if (heroBottom > 80) {
+        nav.classList.add('hero-nav');
+      } else {
+        nav.classList.remove('hero-nav');
+      }
+    });
+
+    /* ── REVEAL ── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ── MOBILE MENU ── */
+    function openMenu() {
+      document.getElementById('mobile-menu').classList.add('open');
+      document.getElementById('mobile-overlay').classList.add('open');
+    }
+
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('mobile-overlay').classList.remove('open');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  </script>
+
+  <script src="shared.js"></script>
+  <script>
+  (function(){
+    var ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;cursor:zoom-out;';
+    var img = document.createElement('img');
+    img.style.cssText = 'max-width:95vw;max-height:95vh;object-fit:contain;display:block;transform:scale(0.75);transition:transform 0.7s cubic-bezier(0.16,1,0.3,1);';
+    var closeBtn = document.createElement('span');
+    closeBtn.innerHTML = '&#x2715;';
+    closeBtn.style.cssText = 'position:absolute;top:1.5rem;right:1.5rem;color:rgba(255,255,255,0.8);font-size:2rem;cursor:pointer;line-height:1;';
+    ov.appendChild(img);
+    ov.appendChild(closeBtn);
+    document.body.appendChild(ov);
+    function openLB(src) {
+      img.src = src;
+      img.style.transform = 'scale(0.75)';
+      ov.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        img.style.transform = 'scale(1)';
+      }); });
+    }
+    function closeLB() {
+      ov.style.display = 'none';
+      document.body.style.overflow = '';
+      setTimeout(function(){ img.src = ''; }, 300);
+    }
+    document.body.addEventListener('click', function(e) {
+      var t = e.target;
+      var mediaItem = t.closest && t.closest('.media-item');
+      if (mediaItem) {
+        var src = (t.tagName === 'IMG') ? t.src : (mediaItem.querySelector('img') ? mediaItem.querySelector('img').src : null);
+        if (src) openLB(src);
+      }
+    });
+    ov.addEventListener('click', closeLB);
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); closeLB(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLB(); });
+  })();
+  </script>
+
+  <script>
+    /* ── PORTFOLIO GRID ── */
+    const portFiles = [
+      '-Bearbeitet-14.jpg','-Bearbeitet-2-2.jpg','-Bearbeitet-2-3.jpg',
+      '1Y7A0980-2.jpg','1Y7A4057.jpg','1Y7A6898.jpg','1Y7A7067.jpg',
+      '2S1B7128.jpg','2S1B7280.jpg','2S1B8130.jpg','2S1B9082 Kopie 1.jpg',
+      'DSC00163-Bearbeitet.jpg','DSC01044.jpg',
+      'Dubrovnik 03.2008 sw-03-49.jpg','Dubrovnik 03.2008 sw-03-85.jpg',
+      'Golf St. Leon Rot 2-7911.jpg',
+      'Kopie_von_\u201ePiazza_202604092244.jpg',
+      'Man_in_suit_202604092247.jpg','Man_portrait_intense_202604092247.jpg',
+      'Man_with_beard_202604092248.jpg','Man_with_stubble_202604092247.jpg',
+      'Ocean_water_surface_202604092245.jpg','Person_walking_in_202604092247.jpg',
+      'Sailing_yacht_sunset_202604092244.jpg',
+      'Schwarz_weiss_mit_202604092243.jpg',
+      'Schwarz_wei\u00df_portraits_202604092242 (1).jpg',
+      'Segelyacht_auf_dem_202604092246.jpg',
+      'Two_yachts_from_202604092244.jpg',
+      'Venezia06.jpg','Venice_Grand_Canal_202604092245.jpg',
+      'Young_woman_in_202604092246.jpg','Young_woman_on_202604092246.jpg',
+      'das_bild_perfekt_202604092248.jpg','ein_foto_daraus_202604092244.jpg',
+      'image.png_202604092248.jpg','in_gelb_und_202604092245.jpg',
+      'julianrachlin bearb. (617 von 1081).jpg',
+      'realistic_und_scharf_202604092245.jpg',
+      'schwarz_weiss_202604092247.jpg','und_jetzt_eine_202604092246.jpg',
+      'without_gondole_objetiv_202604092245.jpg'
+    ].sort(() => Math.random() - 0.5);
+
+    const portVideos = [
+      'Drone_flight_over_202604092233.mp4','Eye_bw_7sec.mp4',
+      'Eye_closes_and_202604092233.mp4','No_they_should_202604041756.mp4',
+      'Zoom_eyes_close_202604092233.mp4','how_the_flower_202604081931.mp4',
+      'light.mp4','ocean.mp4','slight_waves_202604082313.mp4',
+      'slight_waves_202604092233.mp4'
+    ].sort(() => Math.random() - 0.5);
+
+    const portGallery = document.getElementById('port-gallery');
+    portFiles.forEach(f => {
+      const div = document.createElement('div');
+      div.className = 'port-item';
+      const img = document.createElement('img');
+      img.src = 'img/slideshow/' + encodeURIComponent(f);
+      img.alt = ''; img.loading = 'lazy';
+      img.onclick = () => openPortLb(img.src);
+      div.appendChild(img);
+      portGallery.appendChild(div);
+    });
+
+    const portLb = document.getElementById('port-lb');
+    const portLbImg = document.getElementById('port-lb-img');
+    function openPortLb(src) {
+      portLbImg.src = src;
+      portLb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    portLb.addEventListener('click', () => {
+      portLb.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { portLb.classList.remove('open'); document.body.style.overflow = ''; }
+    });
+  </script>
+</body>
+</html>

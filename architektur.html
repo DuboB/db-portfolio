@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architektur — db by Dubo Bulic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .nav-logo { font-family:'Assistant',sans-serif; font-weight:700; font-size:1.6rem; letter-spacing:0.04em; color:var(--black); text-decoration:none !important; display:flex; align-items:baseline; gap:0.2rem; transition:color 0.3s; }
+    .nav-logo-sub { font-weight:300; font-size:0.7rem; letter-spacing:0.12em; color:rgba(18,18,18,0.5); text-decoration:none !important; }
+    nav.hero-nav .nav-logo, nav.hero-nav .nav-links a, nav.hero-nav .nav-right a { color:var(--white); }
+    nav.hero-nav .nav-logo-sub { color:rgba(255,255,255,0.5); }
+    nav.hero-nav .burger span { background:var(--white); }
+
+    .slide-hero { position:relative; width:100%; height:100vh; overflow:hidden; background:#111; }
+    .slide-hero .foto-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; z-index:1; }
+    .slide-hero .foto-slide.active { opacity:1; z-index:2; }
+    #sh-flash { position:absolute; inset:0; z-index:5; background:#fff; opacity:0; pointer-events:none; }
+    .slide-hero-text { position:absolute; bottom:5vh; left:2.5vw; z-index:10; pointer-events:none; }
+    .slide-hero-text .hero-logo { display:block; font-family:'Assistant',sans-serif; font-weight:700; font-size:clamp(3.5rem,8vw,7rem); letter-spacing:-0.05em; color:var(--white); line-height:1; }
+    .slide-hero-text h1 { font-family:'Assistant',sans-serif; font-weight:600; font-size:clamp(0.65rem,1.2vw,0.85rem); letter-spacing:0.25em; line-height:1.4; color:rgba(255,255,255,0.8); margin-top:0.5rem; }
+
+    .arch-section { padding:6px 0 0; }
+    .arch-grid { columns:3; column-gap:6px; }
+    .arch-item { break-inside:avoid; margin-bottom:6px; overflow:hidden; cursor:zoom-in; }
+    .arch-item img { width:100%; height:auto; display:block; filter:brightness(0.92); transition:transform 0.7s ease, filter 0.5s ease; }
+    .arch-item:hover img { transform:scale(1.04); filter:brightness(1); }
+    @media (max-width:760px) { .arch-grid { columns:2; } }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav" class="hero-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <div class="slide-hero" id="slide-hero">
+    <div class="foto-slide active" id="sh-a"></div>
+    <div class="foto-slide" id="sh-b"></div>
+    <div id="sh-flash"></div>
+    <div class="slide-hero-text">
+      <span class="hero-logo">db</span>
+      <h1 data-i18n="hero_title">Visual<br />Storytelling</h1>
+    </div>
+  </div>
+
+  <div class="arch-section">
+    <div class="arch-grid" id="arch-grid"></div>
+  </div>
+
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    const archFiles = [
+      '1Y7A0004.jpg','1Y7A0015.jpg','1Y7A0050.jpg','1Y7A0126.jpg','1Y7A2322.jpg','1Y7A2634.jpg',
+      '1Y7A3081 (1).jpg','1Y7A4481 1.jpg','1Y7A4496 (1).jpg','1Y7A4619.jpg','1Y7A4649-2.jpg','1Y7A4706.jpg',
+      '1Y7A7655.jpg','1Y7A7694.jpg','1Y7A7727-2.jpg','1Y7A8041.jpg','1Y7A8178.jpg','1Y7A8191.jpg',
+      '1Y7A8302.jpg','1Y7A8347.jpg','1Y7A8388.jpg','1Y7A8573.jpg','1Y7A8714.jpg','1Y7A9103.jpg',
+      '1Y7A9106.jpg','1Y7A9110.jpg','1Y7A9170.jpg','1Y7A9358.jpg','1Y7A9454 (1).jpg',
+      '1Y7A9835.jpg','1Y7A9840.jpg','1Y7A9937.jpg'
+    ].sort(() => Math.random() - 0.5);
+
+    const shA = document.getElementById('sh-a');
+    const shB = document.getElementById('sh-b');
+    const shFlash = document.getElementById('sh-flash');
+    let shAktiv = shA, shNaechst = shB, shIdx = 0;
+    function shShow(src) {
+      shNaechst.style.backgroundImage = `url('img/architektur/${encodeURIComponent(src)}')`;
+      shFlash.style.transition = 'none'; shFlash.style.opacity = '1';
+      shAktiv.classList.remove('active'); shNaechst.classList.add('active');
+      [shAktiv, shNaechst] = [shNaechst, shAktiv];
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        shFlash.style.transition = 'opacity 0.25s ease'; shFlash.style.opacity = '0';
+      }));
+    }
+    shShow(archFiles[0]);
+    setInterval(() => { shIdx = (shIdx + 1) % archFiles.length; shShow(archFiles[shIdx]); }, 1000);
+
+    const grid = document.getElementById('arch-grid');
+    archFiles.forEach(f => {
+      const div = document.createElement('div');
+      div.className = 'arch-item';
+      const img = document.createElement('img');
+      img.src = `img/architektur/${encodeURIComponent(f)}`;
+      img.alt = 'Architektur'; img.loading = 'lazy';
+      div.appendChild(img);
+      div.addEventListener('click', () => openLightbox(`img/architektur/${encodeURIComponent(f)}`));
+      grid.appendChild(div);
+    });
+
+    const slideHero = document.getElementById('slide-hero');
+    window.addEventListener('scroll', () => {
+      const n = document.getElementById('main-nav');
+      n.classList.toggle('hero-nav', slideHero.getBoundingClientRect().bottom > 80);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>db Portfolio — Projekt Dokumentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #0d0d0d;
+      --white:  #f5f4f0;
+      --accent: #c8b89a;
+      --dim:    rgba(245,244,240,0.45);
+      --line:   rgba(245,244,240,0.1);
+      --code-bg: rgba(255,255,255,0.06);
+    }
+
+    html {
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Assistant', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── SLIDES ── */
+    .slide {
+      scroll-snap-align: start;
+      min-height: 100vh;
+      padding: 7vh 6vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .slide-num {
+      position: absolute;
+      top: 3vh;
+      right: 4vw;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 8vw, 7rem);
+      font-weight: 300;
+      color: rgba(245,244,240,0.04);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    h3 {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      margin-top: 2rem;
+    }
+    h3:first-child { margin-top: 0; }
+
+    p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.85;
+      max-width: 680px;
+      margin-bottom: 1rem;
+    }
+
+    strong { color: var(--white); font-weight: 600; }
+
+    /* ── COVER ── */
+    .slide-cover {
+      background: var(--black);
+      justify-content: flex-end;
+      padding-bottom: 8vh;
+    }
+
+    .cover-logo {
+      font-family: 'Assistant', sans-serif;
+      font-weight: 700;
+      font-size: clamp(6rem, 14vw, 12rem);
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0;
+    }
+
+    .cover-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      color: var(--dim);
+      margin-top: 1.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    .cover-meta {
+      margin-top: 4rem;
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .cover-meta-item {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,244,240,0.3);
+    }
+
+    .cover-meta-item span {
+      display: block;
+      color: var(--accent);
+      margin-top: 0.3rem;
+    }
+
+    /* ── GRID LAYOUTS ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4vw;
+      align-items: start;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 0.5rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 0.5rem;
+    }
+
+    /* ── PAGE CARDS ── */
+    .page-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      padding: 1.5rem 1.8rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .page-card:hover {
+      background: rgba(200,184,154,0.08);
+      border-color: rgba(200,184,154,0.3);
+    }
+
+    .page-card .page-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: rgba(200,184,154,0.4);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-card .page-name {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .page-card .page-desc {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.6;
+      max-width: 100%;
+      margin-bottom: 0;
+    }
+
+    .page-card .page-tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid rgba(200,184,154,0.3);
+      color: var(--accent);
+    }
+
+    /* ── CODE ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--line);
+      border-left: 2px solid var(--accent);
+      padding: 1.4rem 1.6rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      line-height: 1.7;
+      color: rgba(245,244,240,0.75);
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      background: var(--code-bg);
+      padding: 0.15em 0.5em;
+      color: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* ── RULE CARDS ── */
+    .rule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .rule-item {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1.2rem;
+      align-items: start;
+    }
+
+    .rule-item:first-child { border-top: 1px solid var(--line); }
+
+    .rule-icon {
+      font-size: 0.8rem;
+      color: var(--accent);
+      padding-top: 0.15rem;
+    }
+
+    .rule-text {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.7;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .rule-text strong { color: var(--white); }
+
+    /* ── SKILL CARD ── */
+    .skill-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-cmd {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .skill-badge {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      background: rgba(200,184,154,0.12);
+      border: 1px solid rgba(200,184,154,0.3);
+      color: var(--accent);
+    }
+
+    /* ── STEP LIST ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 1rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+
+    .step:first-child { border-top: 1px solid var(--line); }
+
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: rgba(200,184,154,0.5);
+      line-height: 1;
+      padding-top: 0.1rem;
+    }
+
+    .step-body { padding-top: 0.1rem; }
+
+    .step-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .step-desc {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.7;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    /* ── NAV DOT ── */
+    .slide-nav {
+      position: fixed;
+      right: 1.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 100;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(245,244,240,0.2);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.5);
+    }
+
+    /* ── TODO / NEXT ── */
+    .todo-item {
+      display: grid;
+      grid-template-columns: 1.8rem 1fr;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+
+    .todo-item:first-child { border-top: 1px solid var(--line); }
+
+    .todo-check {
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(200,184,154,0.4);
+      margin-top: 0.18rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .todo-check.done { background: rgba(200,184,154,0.15); }
+
+    .todo-text {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.7;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .todo-text strong { color: var(--white); }
+
+    /* ── TABLE ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 0.82rem;
+    }
+
+    th {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: left;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(200,184,154,0.3);
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--line);
+      font-weight: 300;
+      color: var(--dim);
+      vertical-align: top;
+    }
+
+    td:first-child { color: var(--white); font-weight: 400; }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .slide { padding: 6vh 5vw; }
+      .slide-nav { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV DOTS ── -->
+<nav class="slide-nav" id="slide-nav">
+  <div class="dot active" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+  <div class="dot" onclick="goTo(4)"></div>
+  <div class="dot" onclick="goTo(5)"></div>
+  <div class="dot" onclick="goTo(6)"></div>
+  <div class="dot" onclick="goTo(7)"></div>
+  <div class="dot" onclick="goTo(8)"></div>
+  <div class="dot" onclick="goTo(9)"></div>
+  <div class="dot" onclick="goTo(10)"></div>
+  <div class="dot" onclick="goTo(11)"></div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     SLIDE 01 — COVER
+══════════════════════════════════════ -->
+<section class="slide slide-cover" id="s0">
+  <div class="slide-num">01</div>
+  <div>
+    <p class="label">Projekt Dokumentation — 2026</p>
+    <div class="cover-logo">db</div>
+    <p class="cover-sub">Portfolio Webseite — Aufbau & Architektur</p>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        Seiten
+        <span>10 HTML Files</span>
+      </div>
+      <div class="cover-meta-item">
+        Galerie-Seiten
+        <span>7 Galerien</span>
+      </div>
+      <div class="cover-meta-item">
+        Sprachen
+        <span>EN / DE</span>
+      </div>
+      <div class="cover-meta-item">
+        Lokaler Server
+        <span>192.168.0.210:8080</span>
+      </div>
+      <div class="cover-meta-item">
+        Skill Prompts
+        <span>/galerie-seite · /webbilder</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 02 — ALLE SEITEN
+══════════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="slide-num">02</div>
+  <p class="label">Alle HTML Seiten</p>
+  <h2>Was gebaut wurde</h2>
+
+  <div class="grid-4" style="margin-top:1rem;">
+
+    <div class="page-card">
+      <div class="page-num">01</div>
+      <p class="page-name">index.html</p>
+      <p class="page-desc">Hauptseite. Video-Hero (7 Videos), Foto-Slideshow, Services-Block, Portfolio-Grid (Masonry), Contact-Strip.</p>
+      <span class="page-tag">Startseite</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">02</div>
+      <p class="page-name">portfolio.html</p>
+      <p class="page-desc">Portfolio-Übersicht. Slideshow-Hero + Masonry-Grid mit allen Kategorien.</p>
+      <span class="page-tag">Galerie</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">03</div>
+      <p class="page-name">people.html</p>
+      <p class="page-desc">People & Portrait Galerie. 54 Fotos. Flash-Slideshow + Masonry-Grid. CSS: .people-grid</p>
+      <span class="page-tag">Galerie · 54 Fotos</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">04</div>
+      <p class="page-name">landscape.html</p>
+      <p class="page-desc">Landschafts-Galerie. 108 Fotos. Slideshow + Masonry-Grid. CSS: .ls-grid</p>
+      <span class="page-tag">Galerie · 108 Fotos</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">05</div>
+      <p class="page-name">golf.html</p>
+      <p class="page-desc">Golf-Fotografie. 113 Fotos. Slideshow + Masonry-Grid. CSS: .golf-grid</p>
+      <span class="page-tag">Galerie · 113 Fotos</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">06</div>
+      <p class="page-name">wedding.html</p>
+      <p class="page-desc">Hochzeits-Fotografie. 186 Fotos. Slideshow + Masonry-Grid. CSS: .wedding-grid</p>
+      <span class="page-tag">Galerie · 186 Fotos</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">07</div>
+      <p class="page-name">architektur.html</p>
+      <p class="page-desc">Architektur-Fotografie. 32 Fotos. Slideshow + Masonry-Grid. CSS: .arch-grid</p>
+      <span class="page-tag">Galerie · 32 Fotos</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">08</div>
+      <p class="page-name">projects.html</p>
+      <p class="page-desc">Video-Projekte. Video-Hero (6 Videos cycling), Video-Grid 2×3. CSS: .projects-grid</p>
+      <span class="page-tag">Video · 6 Clips</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">09</div>
+      <p class="page-name">services.html</p>
+      <p class="page-desc">Leistungen. 4 Service-Boxen (Fotografie, Design, KI, Visual Storytelling). About-Text. Pillars-Grid.</p>
+      <span class="page-tag">White Page</span>
+    </div>
+
+    <div class="page-card">
+      <div class="page-num">10</div>
+      <p class="page-name">contact.html</p>
+      <p class="page-desc">Kontakt. Formular (Name, E-Mail, Betreff, Nachricht) + Portrait-Foto + Kontakt-Info.</p>
+      <span class="page-tag">White Page</span>
+    </div>
+
+    <div class="page-card" style="opacity:0.4;">
+      <div class="page-num">—</div>
+      <p class="page-name">shared.js</p>
+      <p class="page-desc">Globale Logik: Nav, Mobile Menu, Lightbox, Reveal Observer, i18n EN/DE.</p>
+      <span class="page-tag">Geteilt</span>
+    </div>
+
+    <div class="page-card" style="opacity:0.4;">
+      <div class="page-num">—</div>
+      <p class="page-name">style.css</p>
+      <p class="page-desc">Globale Styles für alle Unterseiten. Nav, Footer, Mobile Menu, Burger, Reveal Animationen.</p>
+      <span class="page-tag">Geteilt</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 03 — ARCHITEKTUR
+══════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="slide-num">03</div>
+  <div class="grid-2">
+
+    <div>
+      <p class="label">Technische Architektur</p>
+      <h2>shared.js &amp; style.css</h2>
+      <p>Alle Seiten teilen sich <code>shared.js</code> und (außer index.html) <code>style.css</code>. Diese Dateien deklarieren globale Variablen — niemals in Inline-Scripts neu deklarieren.</p>
+
+      <h3>Was shared.js global bereitstellt</h3>
+      <div class="rule-list">
+        <div class="rule-item">
+          <div class="rule-icon">const</div>
+          <p class="rule-text"><strong>nav</strong> — Referenz auf #main-nav. Auf Unterseiten stattdessen <code>slideHero</code> für Nav-Scroll verwenden.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">const</div>
+          <p class="rule-text"><strong>lb, lbImg</strong> — Lightbox DOM-Element. Niemals erneut <code>document.createElement('div')</code> für Lightbox aufrufen.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">fn</div>
+          <p class="rule-text"><strong>openLightbox(src)</strong> — Lightbox öffnen mit Bild-URL. Direkter Aufruf in Gallery-Seiten.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">fn</div>
+          <p class="rule-text"><strong>openMenu() / closeMenu()</strong> — Mobile Menu öffnen/schließen.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">fn</div>
+          <p class="rule-text"><strong>setLang(lang)</strong> — Sprache wechseln. Liest <code>data-i18n</code> und <code>data-i18n-ph</code> Attribute.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">obs</div>
+          <p class="rule-text"><strong>revealObserver</strong> — IntersectionObserver für <code>.reveal</code> Klasse. Fügt <code>visible</code> hinzu wenn im Viewport.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>index.html — Sonderregel</h3>
+      <p><code>index.html</code> lädt <strong>kein style.css</strong>. Alle CSS-Regeln sind inline im <code>&lt;style&gt;</code>-Block. Alle anderen Seiten laden:</p>
+<pre>&lt;link rel="stylesheet" href="style.css?v=4" /&gt;
+&lt;style&gt;
+  /* seitenspezifische Styles */
+  .nav-logo { ... }
+  .SEITE-grid { ... }
+&lt;/style&gt;</pre>
+
+      <h3>Nav-Scroll auf Unterseiten</h3>
+      <p>Da <code>const nav</code> bereits in shared.js existiert, muss auf Unterseiten eine andere Variable für den Scroll-Listener verwendet werden:</p>
+<pre>// RICHTIG — auf Galerie-Seiten:
+const slideHero = document.getElementById('slide-hero');
+window.addEventListener('scroll', () => {
+  const n = document.getElementById('main-nav');
+  n.classList.toggle('hero-nav',
+    slideHero.getBoundingClientRect().bottom > 80);
+});
+
+// FALSCH — würde Fehler werfen:
+// const nav = document.getElementById('main-nav');</pre>
+
+      <h3>Cache Busting</h3>
+      <p>Bei Änderungen an <code>style.css</code> Version erhöhen: <code>style.css?v=4</code> → <code>?v=5</code></p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 04 — MASONRY + SLIDESHOW
+══════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="slide-num">04</div>
+  <div class="grid-2">
+
+    <div>
+      <p class="label">CSS Pattern</p>
+      <h2>Masonry Grid</h2>
+      <p>Echte Masonry-Layout mit CSS <code>columns</code>. Bilder behalten ihre natürliche Höhe — kein festes Seitenverhältnis. Ergibt den Puzzle-Look.</p>
+<pre>/* Masonry Grid — Template */
+.SEITE-section { padding: 6px 0 0; }
+
+.SEITE-grid {
+  columns: 3;
+  column-gap: 6px;
+}
+
+.SEITE-item {
+  break-inside: avoid;
+  margin-bottom: 6px;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.SEITE-item img {
+  width: 100%;
+  height: auto; /* ← natürliche Bildhöhe! */
+  display: block;
+  filter: brightness(0.92);
+  transition: transform 0.7s ease, filter 0.5s ease;
+}
+
+.SEITE-item:hover img {
+  transform: scale(1.04);
+  filter: brightness(1);
+}
+
+@media (max-width: 760px) {
+  .SEITE-grid { columns: 2; }
+}</pre>
+    </div>
+
+    <div>
+      <p class="label">JS Pattern</p>
+      <h2>Flash Slideshow</h2>
+      <p>Hero-Slideshow mit 1-Sek-Intervall und weißem Flash-Effekt beim Bildwechsel. Zwei Slides (A/B) wechseln sich ab.</p>
+<pre>// Flash-Transition Slideshow
+const shA    = document.getElementById('sh-a');
+const shB    = document.getElementById('sh-b');
+const shFlash = document.getElementById('sh-flash');
+let shAktiv = shA, shNaechst = shB, shIdx = 0;
+
+function shShow(src) {
+  shNaechst.style.backgroundImage =
+    `url('img/ORDNER/${encodeURIComponent(src)}')`;
+  // Flash: sofort weiß
+  shFlash.style.transition = 'none';
+  shFlash.style.opacity = '1';
+  // Slides tauschen
+  shAktiv.classList.remove('active');
+  shNaechst.classList.add('active');
+  [shAktiv, shNaechst] = [shNaechst, shAktiv];
+  // Flash ausblenden
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    shFlash.style.transition = 'opacity 0.25s ease';
+    shFlash.style.opacity = '0';
+  }));
+}
+
+shShow(FILES[0]);
+setInterval(() => {
+  shIdx = (shIdx + 1) % FILES.length;
+  shShow(FILES[shIdx]);
+}, 1000);</pre>
+
+      <h3>Dateinamen mit Sonderzeichen</h3>
+<pre>// Immer encodeURIComponent() für Dateinamen:
+img.src = `img/golf/${encodeURIComponent(f)}`;
+// → Leerzeichen, Umlaute, Klammern werden korrekt kodiert
+
+// Fotos zufällig mischen:
+const FILES = [...].sort(() => Math.random() - 0.5);</pre>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 05 — i18n ÜBERSETZUNGEN
+══════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="slide-num">05</div>
+  <div class="grid-2">
+
+    <div>
+      <p class="label">Mehrsprachigkeit</p>
+      <h2>EN / DE<br>Übersetzungen</h2>
+      <p>Das i18n-System läuft komplett über <code>shared.js</code>. Zwei Attribute im HTML steuern was übersetzt wird:</p>
+
+      <table>
+        <tr>
+          <th>Attribut</th>
+          <th>Zweck</th>
+          <th>Beispiel</th>
+        </tr>
+        <tr>
+          <td><code>data-i18n</code></td>
+          <td>Text-Inhalt (<code>innerHTML</code>)</td>
+          <td><code>data-i18n="nav_contact"</code></td>
+        </tr>
+        <tr>
+          <td><code>data-i18n-ph</code></td>
+          <td>Placeholder-Text</td>
+          <td><code>data-i18n-ph="form_name_ph"</code></td>
+        </tr>
+      </table>
+
+      <h3>Alle i18n Keys — Übersicht</h3>
+      <table>
+        <tr><th>Bereich</th><th>Keys</th></tr>
+        <tr><td>Navigation</td><td>nav_portfolio, nav_projects, nav_contact, nav_services</td></tr>
+        <tr><td>Mobile Menu</td><td>mob_portfolio, mob_projects, mob_people, mob_landscape, mob_arch, mob_golf, mob_wedding, mob_services, mob_contact</td></tr>
+        <tr><td>Hero</td><td>hero_title</td></tr>
+        <tr><td>Contact Strip</td><td>contact_h</td></tr>
+        <tr><td>Footer</td><td>footer</td></tr>
+        <tr><td>Services Seite</td><td>srv_label, srv_heading, srv1_name–srv4_name, srv1_1–srv4_4, srv_about_label, srv_about_lead, srv_about_1–5, srv_p1_title–srv_p4_title, srv_p1_text–srv_p4_text</td></tr>
+        <tr><td>Contact Seite</td><td>contact_label, contact_heading, form_name, form_email, form_subject, form_message, form_send, form_subj_1–8, info_email_label, info_mobile_label, info_location_label, info_response_label, info_location_val, info_response_val</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>setLang() Funktion</h3>
+<pre>function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('db_lang', lang);
+  const t = i18n[lang];
+
+  // Text-Inhalte
+  document.querySelectorAll('[data-i18n]')
+    .forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+  // Placeholders
+  document.querySelectorAll('[data-i18n-ph]')
+    .forEach(el => {
+      const key = el.getAttribute('data-i18n-ph');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+
+  // Aktiver Button
+  document.querySelectorAll('.lang-btn')
+    .forEach(btn => {
+      btn.classList.toggle('active',
+        btn.dataset.lang === lang);
+    });
+
+  document.documentElement.lang = lang;
+}
+
+// Beim Laden automatisch Sprache setzen:
+document.addEventListener('DOMContentLoaded',
+  () => setLang(currentLang));</pre>
+
+      <h3>Sprache im HTML einbinden</h3>
+<pre>&lt;!-- Nav Link --&gt;
+&lt;a href="contact.html"
+   data-i18n="nav_contact"&gt;Contact&lt;/a&gt;
+
+&lt;!-- Form Label --&gt;
+&lt;label data-i18n="form_name"&gt;Name&lt;/label&gt;
+&lt;input data-i18n-ph="form_name_ph"
+       placeholder="Your name" /&gt;
+
+&lt;!-- Select Option --&gt;
+&lt;option data-i18n="form_subj_1"&gt;Photography&lt;/option&gt;
+
+&lt;!-- Sprach-Switcher --&gt;
+&lt;span class="lang-btn active"
+      data-lang="en"
+      onclick="setLang('en')"&gt;🇬🇧&lt;/span&gt;
+&lt;span class="lang-btn"
+      data-lang="de"
+      onclick="setLang('de')"&gt;🇩🇪&lt;/span&gt;</pre>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 06 — DESIGN REGELN
+══════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="slide-num">06</div>
+  <div class="grid-2">
+
+    <div>
+      <p class="label">Globale Design-Regeln</p>
+      <h2>Typography &amp;<br>Mobile Menu</h2>
+
+      <h3>Uppercase Typografie (Auf-Druck-Stil)</h3>
+<pre>/* style.css + index.html inline */
+body {
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* Logo-Ausnahme — NIEMALS uppercase */
+.nav-logo {
+  text-transform: none !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Logo HTML — gleich auf allen Seiten */
+&lt;a class="nav-logo" href="index.html"&gt;
+  db&lt;span class="nav-logo-sub"&gt;by DUBO BULIC&lt;/span&gt;
+&lt;/a&gt;</pre>
+
+      <h3>Nav hero-nav (transparent über Hero)</h3>
+<pre>/* Weißer Nav mit schwarzem Text = default */
+nav { background: rgba(255,255,255,0.95); }
+
+/* Transparent + weißer Text über Hero */
+nav.hero-nav {
+  background: transparent;
+  border-bottom: none;
+}
+nav.hero-nav .nav-logo,
+nav.hero-nav .nav-links a,
+nav.hero-nav .nav-right a { color: var(--white); }
+nav.hero-nav .nav-logo-sub { color: rgba(255,255,255,0.5); }
+nav.hero-nav .burger span { background: var(--white); }</pre>
+    </div>
+
+    <div>
+      <h3>Mobile Menu — von rechts, transparent</h3>
+<pre>/* style.css */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;        /* ← startet rechts außen */
+  width: 100%;
+  height: 100vh;
+  background: transparent;  /* ← kein Hintergrund */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;    /* ← Text rechts */
+  padding: 7rem 2rem 2rem;
+  gap: 0;
+  transition: right 0.35s ease;  /* ← Slide von rechts */
+  z-index: 150;
+}
+
+.mobile-menu.open { right: 0; }
+
+.mobile-menu a {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  width: 100%;
+  text-align: right;
+}
+
+/* Overlay — transparent */
+.mobile-overlay {
+  background: transparent;
+}</pre>
+
+      <h3>Nav-Links — vereinfacht</h3>
+<pre>&lt;!-- Nur 4 Links auf allen Seiten: --&gt;
+Portfolio · Projects · Contact · Services</pre>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 07 — SKILL: /galerie-seite
+══════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="slide-num">07</div>
+  <p class="label">Claude Code Skill Prompt</p>
+
+  <div class="skill-header">
+    <span class="skill-cmd">/galerie-seite</span>
+    <span class="skill-badge">Claude Command</span>
+  </div>
+
+  <p>Erstellt eine komplette neue Galerie-Seite nach dem db-Portfolio-Template. Gespeichert in <code>~/.claude/commands/galerie-seite.md</code></p>
+
+  <div class="grid-2" style="margin-top: 1.5rem;">
+    <div>
+      <h3>Was der Skill macht — Schritte</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p class="step-title">Eingabe</p>
+            <p class="step-desc">Seitenname (z.B. "Golf") und Quell-Ordner mit Originalfotos werden als Argument übergeben.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p class="step-title">Fotos optimieren mit sips</p>
+            <p class="step-desc">Alle JPEGs werden auf max. 2000px skaliert, Qualität 82%, in <code>img/SEITENNAME/</code> gespeichert.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p class="step-title">HTML erstellen</p>
+            <p class="step-desc">Nav (hero-nav, transparent), Flash-Slideshow Hero (100vh), Masonry-Grid, Contact Strip, Footer.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <p class="step-title">JS einbetten</p>
+            <p class="step-desc">FILES-Array (zufällig sortiert), Slideshow-Logik, Grid-Rendering, Nav-Scroll — alles ohne Konflikte mit shared.js.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;">Aufruf Beispiel</h3>
+<pre>/galerie-seite Golf,
+  /Volumes/.../00. Orginal/golf</pre>
+    </div>
+
+    <div>
+      <h3>Kritische Regeln im Skill</h3>
+      <div class="rule-list">
+        <div class="rule-item">
+          <div class="rule-icon">⚠</div>
+          <p class="rule-text">Keine Neudeklaration von <code>const nav</code> — stattdessen <code>const slideHero</code> für Nav-Scroll.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">⚠</div>
+          <p class="rule-text">Keine eigene Lightbox erstellen — <code>openLightbox(src)</code> aus shared.js verwenden.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">⚠</div>
+          <p class="rule-text">Kein <code>openMenu()</code> oder <code>closeMenu()</code> neu definieren — kommen aus shared.js.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">✓</div>
+          <p class="rule-text"><code>encodeURIComponent()</code> für alle Dateinamen in img.src und background-image URLs.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">✓</div>
+          <p class="rule-text">Fotos mit <code>.sort(() => Math.random() - 0.5)</code> zufällig mischen.</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">✓</div>
+          <p class="rule-text">Nav- und Mobile-Menu-Links bekommen <code>data-i18n</code> Attribute für EN/DE Übersetzung.</p>
+        </div>
+      </div>
+
+      <h3>Fotos optimieren — sips Befehl</h3>
+<pre>mkdir -p "db Portfolio/img/SEITENNAME"
+for f in "$SRC"/*.jpeg "$SRC"/*.jpg; do
+  [ -f "$f" ] || continue
+  name=$(basename "$f")
+  namejpg="${name%.*}.jpg"
+  sips -Z 2000 \
+       -s format jpeg \
+       -s formatOptions 82 \
+       "$f" --out "$DST/$namejpg" 2>/dev/null
+done</pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 08 — SKILL: /webbilder
+══════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="slide-num">08</div>
+  <p class="label">Claude Code Skill Prompt</p>
+
+  <div class="skill-header">
+    <span class="skill-cmd">/webbilder</span>
+    <span class="skill-badge">Claude Command</span>
+  </div>
+
+  <p>Optimiert alle Fotos in einem Ordner für die Webseite. Speichert optimierte Versionen in einem <code>web/</code> Unterordner. Originale bleiben unverändert.</p>
+
+  <div class="grid-2" style="margin-top: 1.5rem;">
+    <div>
+      <h3>Was der Skill macht — Schritte</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p class="step-title">Quell-Ordner prüfen</p>
+            <p class="step-desc">Alle JPG/JPEG/PNG Dateien im Ordner werden gezählt und ihre Größen angezeigt.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p class="step-title">Unterordner erstellen</p>
+            <p class="step-desc"><code>web/</code> Unterordner im selben Verzeichnis wird angelegt (wenn nicht vorhanden).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p class="step-title">Alle Fotos optimieren</p>
+            <p class="step-desc">sips skaliert auf max. 2000px, Qualität 80%, Format JPEG. Jedes Foto zeigt Vorher/Nachher-Größe.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <p class="step-title">Optional: in Portfolio kopieren</p>
+            <p class="step-desc">Am Ende wird gefragt ob die Fotos direkt in den <code>db Portfolio/img/</code> Ordner kopiert werden sollen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>Der sips Befehl</h3>
+<pre>mkdir -p "$ORDNER/web"
+
+for f in "$ORDNER"/*.{jpg,jpeg,JPG,JPEG,png,PNG}; do
+  [ -f "$f" ] || continue
+  name=$(basename "$f")
+  namejpg="${name%.*}.jpg"
+
+  sips -Z 2000 \
+       -s format jpeg \
+       -s formatOptions 80 \
+       "$f" --out "$ORDNER/web/$namejpg" 2>/dev/null
+
+  orig=$(du -sh "$f" | cut -f1)
+  new=$(du -sh "$ORDNER/web/$namejpg" | cut -f1)
+  echo "$name: $orig → $new"
+done</pre>
+
+      <h3>Unterschied zu /galerie-seite</h3>
+      <table>
+        <tr>
+          <th></th>
+          <th>/webbilder</th>
+          <th>/galerie-seite</th>
+        </tr>
+        <tr>
+          <td>Zweck</td>
+          <td>Nur Fotos optimieren</td>
+          <td>Fotos + HTML Seite</td>
+        </tr>
+        <tr>
+          <td>Qualität</td>
+          <td>80%</td>
+          <td>82%</td>
+        </tr>
+        <tr>
+          <td>Ausgabe</td>
+          <td><code>web/</code> Unterordner</td>
+          <td><code>img/SEITENNAME/</code></td>
+        </tr>
+        <tr>
+          <td>HTML</td>
+          <td>Nein</td>
+          <td>Ja — komplett</td>
+        </tr>
+      </table>
+
+      <h3>Aufruf Beispiel</h3>
+<pre>/webbilder
+→ Fragt nach Ordner-Pfad
+
+oder direkt:
+/webbilder /Volumes/Samsung_T5/...
+           /00. Orginal/people</pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 09 — NÄCHSTE SCHRITTE
+══════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="slide-num">09</div>
+  <div class="grid-2">
+
+    <div>
+      <p class="label">Status &amp; Offene Punkte</p>
+      <h2>Nächste<br>Schritte</h2>
+
+      <div class="steps" style="margin-top:0.5rem;">
+        <div class="todo-item">
+          <div class="todo-check done">✓</div>
+          <p class="todo-text"><strong>Alle Galerie-Seiten</strong> — people, landscape, golf, wedding, architektur, projects fertig.</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check done">✓</div>
+          <p class="todo-text"><strong>EN/DE Übersetzungen</strong> — alle Seiten haben data-i18n Attribute. shared.js hat alle Keys.</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check done">✓</div>
+          <p class="todo-text"><strong>Mobile Menu</strong> — von rechts, transparent, weißer Text, alle Seiten.</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check done">✓</div>
+          <p class="todo-text"><strong>Uppercase Typografie</strong> — body text-transform:uppercase auf allen Seiten, Logo ausgenommen.</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check done">✓</div>
+          <p class="todo-text"><strong>Services &amp; Contact Seiten</strong> — weiße Seiten mit vollständiger i18n.</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text"><strong>portfolio.html</strong> — Cover-Bilder für Kategorie-Links (People / Landscape / Golf / Wedding / Architektur)</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text"><strong>Formular-Backend</strong> — contact.html sendet noch nicht wirklich. Netlify Forms oder Formspree einbinden.</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text"><strong>db Portfolio deployen</strong> — auf Vercel/GitHub wie dubobulic.com. Aktuell nur lokal (192.168.0.210:8080).</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text"><strong>Impressum &amp; Datenschutz</strong> — Texte einpflegen (rechtlich notwendig bei DE Deployment).</p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text"><strong>GitHub 2FA</strong> — Zwei-Faktor-Authentifizierung + Backup-Codes für GitHub-Account.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>Lokaler Testserver</h3>
+<pre>cd "/Volumes/Samsung_T5/Obsidian/AIdb/
+     Cloud inbox/WEB"
+python3 -m http.server 8080
+
+# URL:
+http://192.168.0.210:8080/
+  db%20Portfolio/index.html</pre>
+
+      <h3>Datei-Struktur</h3>
+<pre>db Portfolio/
+├── index.html          ← Hauptseite
+├── portfolio.html
+├── people.html
+├── landscape.html
+├── golf.html
+├── wedding.html
+├── architektur.html
+├── projects.html
+├── services.html
+├── contact.html
+├── docs.html           ← diese Seite
+├── shared.js           ← globale Logik
+├── style.css           ← globale Styles
+├── img/
+│   ├── people/         (54 Fotos)
+│   ├── landscape/      (108 Fotos)
+│   ├── golf/           (113 Fotos)
+│   ├── wedding/        (186 Fotos)
+│   ├── architektur/    (32 Fotos)
+│   ├── slideshow/
+│   └── dubo-contact.jpg
+└── video/
+    ├── v01_woman.mp4
+    ├── v02_eye.mp4
+    ├── v03_flower.mp4
+    ├── v04_drone.mp4
+    ├── v05_ocean.mp4
+    ├── v06_ny.mp4
+    └── v07_auge.mp4</pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 10 — GIT & VERCEL DEPLOYMENT
+══════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="slide-num">10</div>
+  <div class="grid-2">
+
+    <div>
+      <p class="label">Deployment Workflow</p>
+      <h2>Git + Vercel<br>Schritt für Schritt</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p class="step-title">GitHub Repository erstellen</p>
+            <p class="step-desc">Auf <strong>github.com</strong> → "New repository" → Name z.B. <code>db-portfolio</code> → Public oder Private → Create.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p class="step-title">Lokalen Ordner verbinden</p>
+            <p class="step-desc">Im Terminal im Portfolio-Ordner:</p>
+          </div>
+        </div>
+      </div>
+
+<pre>cd "/Volumes/Samsung_T5/Obsidian/AIdb/
+     Cloud inbox/WEB/db Portfolio"
+
+git init
+git add .
+git commit -m "Initial commit — db Portfolio"
+
+# GitHub Remote verbinden:
+git remote add origin
+  https://github.com/DuboB/db-portfolio.git
+
+git branch -M main
+git push -u origin main</pre>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p class="step-title">Vercel verbinden</p>
+            <p class="step-desc">Auf <strong>vercel.com</strong> → "Add New Project" → GitHub Repository auswählen → Deploy. Vercel erkennt automatisch statische Seiten (kein Framework nötig).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <p class="step-title">Auto-Deploy aktivieren</p>
+            <p class="step-desc">Jeder <code>git push</code> auf <code>main</code> → Vercel deployed automatisch in ~30 Sekunden.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <p class="step-title">Änderungen pushen</p>
+            <p class="step-desc">Normaler Workflow nach jeder Änderung:</p>
+          </div>
+        </div>
+      </div>
+
+<pre>git add index.html services.html
+git commit -m "Update services page"
+git push</pre>
+
+    </div>
+
+    <div>
+      <h3>Vercel Settings — wichtig</h3>
+      <table>
+        <tr>
+          <th>Einstellung</th>
+          <th>Wert</th>
+        </tr>
+        <tr>
+          <td>Framework Preset</td>
+          <td>Other (kein Framework)</td>
+        </tr>
+        <tr>
+          <td>Root Directory</td>
+          <td><code>./</code> (Standard)</td>
+        </tr>
+        <tr>
+          <td>Build Command</td>
+          <td>leer lassen</td>
+        </tr>
+        <tr>
+          <td>Output Directory</td>
+          <td>leer lassen</td>
+        </tr>
+        <tr>
+          <td>Install Command</td>
+          <td>leer lassen</td>
+        </tr>
+      </table>
+
+      <h3>Bestehende dubobulic.com</h3>
+      <div class="rule-list">
+        <div class="rule-item">
+          <div class="rule-icon">⚠</div>
+          <p class="rule-text"><strong>NICHT anfassen</strong> ohne Erlaubnis. Ist live auf <code>dubobulic.com</code> via GitHub-Repo: <code>DuboB/db-design-</code></p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">→</div>
+          <p class="rule-text">db Portfolio wird ein <strong>separates Repository</strong> und eine <strong>andere Vercel-Domain</strong>.</p>
+        </div>
+      </div>
+
+      <h3>Nützliche Git-Befehle</h3>
+<pre># Status — was hat sich geändert?
+git status
+
+# Alle Änderungen anzeigen:
+git diff
+
+# Letzten Commit rückgängig (lokal):
+git reset --soft HEAD~1
+
+# Remote Status prüfen:
+git remote -v
+
+# Branch anzeigen:
+git branch</pre>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 11 — DOMAIN BESTELLEN
+══════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div class="slide-num">11</div>
+  <div class="grid-2">
+
+    <div>
+      <p class="label">Domain &amp; Hosting</p>
+      <h2>Domain<br>kaufen &amp; verbinden</h2>
+
+      <h3>Wo Domains kaufen</h3>
+      <table>
+        <tr>
+          <th>Anbieter</th>
+          <th>Besonderheit</th>
+          <th>Preis ca.</th>
+        </tr>
+        <tr>
+          <td><strong>Namecheap</strong></td>
+          <td>Günstig, gute UI, kostenloser WHOIS-Schutz</td>
+          <td>~10–15€/Jahr</td>
+        </tr>
+        <tr>
+          <td><strong>Porkbun</strong></td>
+          <td>Sehr günstig, kostenloser SSL + WHOIS</td>
+          <td>~8–12€/Jahr</td>
+        </tr>
+        <tr>
+          <td><strong>Cloudflare</strong></td>
+          <td>Zum Einkaufspreis (kein Aufschlag), bester DNS</td>
+          <td>~9–11€/Jahr</td>
+        </tr>
+        <tr>
+          <td><strong>Vercel Domains</strong></td>
+          <td>Direkt in Vercel kaufen + verbinden (einfachste Option)</td>
+          <td>~15–20€/Jahr</td>
+        </tr>
+        <tr>
+          <td><strong>IONOS / Strato</strong></td>
+          <td>Deutsche Anbieter, aber teurer</td>
+          <td>~15–25€/Jahr</td>
+        </tr>
+      </table>
+
+      <h3>Domain-Ideen für db Portfolio</h3>
+      <div class="rule-list">
+        <div class="rule-item">
+          <div class="rule-icon">→</div>
+          <p class="rule-text"><strong>dubobulic.de</strong> — Deutsche Variante der bestehenden .com Domain</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">→</div>
+          <p class="rule-text"><strong>db-photo.com / db-photo.de</strong> — Kurz, klar, foto-bezogen</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">→</div>
+          <p class="rule-text"><strong>dubo.photo</strong> — Moderne .photo TLD, einprägsam</p>
+        </div>
+        <div class="rule-item">
+          <div class="rule-icon">→</div>
+          <p class="rule-text"><strong>portfolio.dubobulic.com</strong> — Subdomain der bestehenden Domain (kostenlos via Vercel)</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>Domain mit Vercel verbinden — Schritte</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p class="step-title">Domain kaufen</p>
+            <p class="step-desc">Bei Namecheap/Porkbun/Cloudflare kaufen. Login-Daten sicher speichern.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p class="step-title">In Vercel hinzufügen</p>
+            <p class="step-desc">Vercel Dashboard → Projekt → Settings → Domains → Domain eingeben → Add.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p class="step-title">DNS konfigurieren</p>
+            <p class="step-desc">Vercel zeigt zwei DNS-Einträge die beim Domain-Anbieter eingetragen werden müssen:</p>
+          </div>
+        </div>
+      </div>
+
+<pre># Beim Domain-Anbieter DNS einstellen:
+
+# A Record (für Apex/Root Domain):
+Type: A
+Name: @
+Value: 76.76.21.21
+
+# CNAME (für www Subdomain):
+Type: CNAME
+Name: www
+Value: cname.vercel-dns.com</pre>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <p class="step-title">Warten &amp; prüfen</p>
+            <p class="step-desc">DNS propagiert in 5 Min bis 48h. Vercel zeigt grünen Haken wenn aktiv. SSL-Zertifikat wird automatisch ausgestellt.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Subdomain von dubobulic.com (kostenlos)</h3>
+<pre># Falls du portfolio.dubobulic.com nutzen willst:
+# In Vercel → Custom Domain →
+#   portfolio.dubobulic.com
+
+# Beim DNS-Anbieter von dubobulic.com:
+Type: CNAME
+Name: portfolio
+Value: cname.vercel-dns.com</pre>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SLIDE 12 — GITHUB SECURITY
+══════════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="slide-num">12</div>
+  <p class="label">Security Checkliste</p>
+  <h2>GitHub Sicherheit<br>absichern</h2>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+
+    <div>
+      <h3>Checkliste — noch ausstehend</h3>
+      <div class="steps">
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>1. Starkes Passwort setzen</strong><br>
+            github.com → Settings → Password and Authentication → Change Password.<br>
+            Mindestens 16 Zeichen, Kombination aus Groß/Klein/Zahlen/Symbolen. Am besten Passwort-Manager (1Password, Bitwarden).
+          </p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>2. Zwei-Faktor-Authentifizierung (2FA) aktivieren</strong><br>
+            Settings → Password and Authentication → Enable two-factor authentication.<br>
+            Empfohlen: <strong>Authenticator App</strong> (Google Authenticator, Authy oder 1Password).<br>
+            NICHT nur SMS — kann gehackt werden (SIM Swapping).
+          </p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>3. Backup-Codes sichern</strong><br>
+            Nach 2FA-Aktivierung zeigt GitHub 16 Backup-Codes. Diese an einem sicheren Ort speichern (ausdrucken oder Passwort-Manager).<br>
+            Diese Codes erlauben Login wenn Handy verloren/kaputt.
+          </p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>4. SSH Key statt Passwort für Git Push</strong><br>
+            Settings → SSH and GPG keys → New SSH Key.<br>
+            Terminal: <code>ssh-keygen -t ed25519 -C "dubobulic@gmail.com"</code><br>
+            Public Key (~/.ssh/id_ed25519.pub) in GitHub eintragen.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="steps">
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>5. Aktive Sessions prüfen</strong><br>
+            Settings → Sessions → Alle unbekannten Geräte abmelden.<br>
+            Settings → Security log → Prüfen ob verdächtige Logins vorhanden.
+          </p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>6. E-Mail-Adresse bestätigen</strong><br>
+            Settings → Emails → Sicherstellen dass dubobulic@gmail.com verifiziert ist und Backup-E-Mail gesetzt ist.
+          </p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>7. Repository-Sichtbarkeit prüfen</strong><br>
+            Für deploy-Repo (dubobulic.com): kann Public sein (statische HTML).<br>
+            Kein API-Keys, Passwörter oder .env Dateien in Repos committen!
+          </p>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check">○</div>
+          <p class="todo-text">
+            <strong>8. Vercel Account absichern</strong><br>
+            vercel.com → Account Settings → Security → 2FA aktivieren.<br>
+            Vercel mit GitHub verknüpft = wenn GitHub kompromittiert, auch Vercel gefährdet.
+          </p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1.5rem;">SSH Key einrichten — Kurzanleitung</h3>
+<pre># 1. Key generieren:
+ssh-keygen -t ed25519 -C "dubobulic@gmail.com"
+# → Speichern in ~/.ssh/id_ed25519
+# → Passphrase optional (empfohlen)
+
+# 2. Public Key anzeigen:
+cat ~/.ssh/id_ed25519.pub
+# → Diesen Text komplett kopieren
+
+# 3. In GitHub eintragen:
+# Settings → SSH Keys → New SSH Key
+# Title: "Mac Mini 2025"
+# Key: (Public Key einfügen)
+
+# 4. Remote URL ändern:
+git remote set-url origin
+  git@github.com:DuboB/db-portfolio.git
+
+# 5. Testen:
+ssh -T git@github.com
+# → "Hi DuboB! You've successfully authenticated"</pre>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function goTo(idx) {
+    slides[idx].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Aktiven Dot aktualisieren
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = Array.from(slides).indexOf(e.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => observer.observe(s));
+
+  // Keyboard Navigation
+  document.addEventListener('keydown', e => {
+    const current = Array.from(slides).findIndex(s => {
+      const r = s.getBoundingClientRect();
+      return r.top >= -50 && r.top < window.innerHeight / 2;
+    });
+    if (e.key === 'ArrowDown' && current < slides.length - 1) goTo(current + 1);
+    if (e.key === 'ArrowUp' && current > 0) goTo(current - 1);
+  });
+</script>
+
+</body>
+</html>

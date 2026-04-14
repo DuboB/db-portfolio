@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding — db by Dubo Bulic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .nav-logo { font-family:'Assistant',sans-serif; font-weight:700; font-size:1.6rem; letter-spacing:0.04em; color:var(--black); text-decoration:none !important; display:flex; align-items:baseline; gap:0.2rem; transition:color 0.3s; }
+    .nav-logo-sub { font-weight:300; font-size:0.7rem; letter-spacing:0.12em; color:rgba(18,18,18,0.5); text-decoration:none !important; }
+    nav.hero-nav .nav-logo, nav.hero-nav .nav-links a, nav.hero-nav .nav-right a { color:var(--white); }
+    nav.hero-nav .nav-logo-sub { color:rgba(255,255,255,0.5); }
+    nav.hero-nav .burger span { background:var(--white); }
+
+    .slide-hero { position:relative; width:100%; height:100vh; overflow:hidden; background:#111; }
+    .slide-hero .foto-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; z-index:1; }
+    .slide-hero .foto-slide.active { opacity:1; z-index:2; }
+    #sh-flash { position:absolute; inset:0; z-index:5; background:#fff; opacity:0; pointer-events:none; }
+    .slide-hero-text { position:absolute; bottom:5vh; left:2.5vw; z-index:10; pointer-events:none; }
+    .slide-hero-text .hero-logo { display:block; font-family:'Assistant',sans-serif; font-weight:700; font-size:clamp(3.5rem,8vw,7rem); letter-spacing:-0.05em; color:var(--white); line-height:1; }
+    .slide-hero-text h1 { font-family:'Assistant',sans-serif; font-weight:600; font-size:clamp(0.65rem,1.2vw,0.85rem); letter-spacing:0.25em; line-height:1.4; color:rgba(255,255,255,0.8); margin-top:0.5rem; }
+
+    .wedding-section { padding:6px 0 0; }
+    .wedding-grid { columns:3; column-gap:6px; }
+    .wedding-item { break-inside:avoid; margin-bottom:6px; overflow:hidden; cursor:zoom-in; }
+    .wedding-item img { width:100%; height:auto; display:block; filter:brightness(0.92); transition:transform 0.7s ease, filter 0.5s ease; }
+    .wedding-item:hover img { transform:scale(1.04); filter:brightness(1); }
+    @media (max-width:760px) { .wedding-grid { columns:2; } }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav" class="hero-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <div class="slide-hero" id="slide-hero">
+    <div class="foto-slide active" id="sh-a"></div>
+    <div class="foto-slide" id="sh-b"></div>
+    <div id="sh-flash"></div>
+    <div class="slide-hero-text">
+      <span class="hero-logo">db</span>
+      <h1 data-i18n="hero_title">Visual<br />Storytelling</h1>
+    </div>
+  </div>
+
+  <div class="wedding-section">
+    <div class="wedding-grid" id="wedding-grid"></div>
+  </div>
+
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    const weddingFiles = [
+      '1Y7A0512.jpg','1Y7A0777.jpg','1Y7A1477.jpg','1Y7A3742.jpg','1Y7A3840.jpg','1Y7A4733.jpg',
+      '1Y7A5455.jpg','1Y7A5890.jpg','1Y7A5945.jpg','1Y7A7694-2.jpg','1Y7A8641.jpg','1Y7A9275.jpg','1Y7A9320.jpg',
+      '20100911-IMG_3278.jpg','20100911-IMG_3555.jpg','20100911-IMG_3665.jpg','20100911-IMG_3807.jpg','20100911-IMG_5390.jpg',
+      '20110701_IMG_0729.jpg','20110701_IMG_0731.jpg','20110701_IMG_1225.jpg','20110701_IMG_1231.jpg','20110701_IMG_1436.jpg',
+      '20110701_IMG_1816.jpg','20110701_IMG_1991.jpg','20110701_IMG_2015.jpg','20110701_IMG_2305.jpg','20110701_IMG_2419.jpg',
+      '20110701_IMG_2428.jpg','20110701_IMG_2492.jpg','20110701_IMG_2970.jpg','20110701_IMG_3042.jpg','20110701_IMG_3048.jpg',
+      '20110701_IMG_3071.jpg','20110702_IMG_3612.jpg','20110702_IMG_3625.jpg','20110702_IMG_4406.jpg','20110702_IMG_4430.jpg',
+      '20110702_IMG_4442.jpg','20110716_IMG_7355.jpg','20110716_IMG_7503.jpg','20110716_IMG_7514.jpg','20110716_IMG_7582.jpg',
+      '20110716_IMG_7585.jpg','20110716_IMG_7679.jpg','20110716_IMG_8000.jpg','20110716_IMG_8102.jpg','20110716_IMG_8182.jpg',
+      '20110716_IMG_8216.jpg','20110716_IMG_8322.jpg','20110716_IMG_8331.jpg','20110716_IMG_8394.jpg','20110716_IMG_8453.jpg',
+      '20110716_IMG_8506.jpg','20110716_IMG_8851.jpg','20110716_IMG_9158.jpg','20110716_IMG_9179.jpg','20110716_IMG_9262.jpg',
+      '20110716_IMG_9598.jpg','20110716_IMG_9646.jpg','20110717_IMG_0945.jpg',
+      '20120512-IMG_3712.jpg','20120512-IMG_3719.jpg','20120512-IMG_3720.jpg','20120512-IMG_3743.jpg',
+      '20120512-IMG_4633.jpg','20120512-IMG_4634.jpg','20120512-IMG_4792.jpg','20120512-IMG_4837.jpg',
+      '20120512-IMG_4861.jpg','20120512-IMG_4868.jpg','20120512-IMG_4912.jpg','20120512-IMG_5034.jpg',
+      '20120512-IMG_5083.jpg','20120512-IMG_5123.jpg','20120512-IMG_5146.jpg','20120512-IMG_5234.jpg',
+      '20120512-IMG_5300.jpg','20120512-IMG_5816.jpg','20120512-IMG_5895.jpg','20120512-IMG_5901.jpg',
+      '20120901-2S1B1265.jpg','20120901-2S1B1366.jpg','20120901-2S1B1463.jpg','20120901-2S1B1710.jpg',
+      '20120901-2S1B1836.jpg','20120901-2S1B1905.jpg','2S1B0803.jpg','2S1B0872.jpg','2S1B1226.jpg',
+      'Business-08-4.jpg','Business-1471.jpg',
+      'Christine Marc Hochzeit bearb.-1175.jpg','Christine Marc Hochzeit bearb.-498.jpg','Christine Marc Hochzeit bearb.-604.jpg',
+      'Golf St. Leon Rot 3-8416.jpg',
+      'Potraits Wedding (10 von 92).jpg','Potraits Wedding (2 von 92).jpg','Potraits Wedding (35 von 92).jpg',
+      'Potraits Wedding (46 von 92).jpg','Potraits Wedding (57 von 92).jpg','Potraits Wedding (63 von 92).jpg',
+      'Potraits Wedding (70 von 92).jpg','Potraits Wedding (79 von 92).jpg','Potraits Wedding (80 von 92).jpg',
+      'SUNBURST96.jpg',
+      'Steffi&Michael.08.2008-6770.jpg','Steffi&Michael.08.2008-6827.jpg','Steffi&Michael.08.2008-7295.jpg',
+      'Steffi&Michael.08.2008-7331.jpg','Steffi&Michael.08.2008-7422.jpg','Steffi&Michael.08.2008-7483.jpg',
+      'Steffi&Michael.08.2008-7647.jpg','Steffi&Michael.08.2008-7650.jpg','Steffi&Michael.08.2008-8089 1.jpg',
+      'Steffi&Michael.08.2008-8217 1.jpg','Steffi&Michael.08.2008-8217.jpg','Steffi&Michael.08.2008-8311 1.jpg',
+      'Steffi&Michael.08.2008-8477.jpg','Steffi&Michael.08.2008-8702.jpg',
+      'Tanja & Alex Hochzeit 08.2008-0368.jpg','Tanja & Alex Hochzeit 08.2008-0653.jpg','Tanja & Alex Hochzeit 08.2008-9896.jpg',
+      'TrauungWedding (16 von 84).jpg','TrauungWedding (21 von 84).jpg','TrauungWedding (22 von 84).jpg',
+      'TrauungWedding (25 von 84).jpg','TrauungWedding (27 von 84).jpg','TrauungWedding (28 von 84).jpg',
+      'TrauungWedding (58 von 84).jpg','TrauungWedding (67 von 84).jpg',
+      '_MG_4345.jpg','_Y7A0757.jpg','_Y7A0783.jpg','_Y7A0838.jpg','_Y7A1053.jpg','_Y7A1109.jpg',
+      '_Y7A1119.jpg','_Y7A1299.jpg','_Y7A1326 1.jpg','_Y7A1338.jpg','_Y7A1470.jpg','_Y7A1508.jpg',
+      '_Y7A1555.jpg','_Y7A1626.jpg','_Y7A1653.jpg','_Y7A1704.jpg','_Y7A1735.jpg','_Y7A1805.jpg',
+      '_Y7A1844.jpg','_Y7A1868.jpg','_Y7A2043.jpg','_Y7A2317.jpg','_Y7A2818.jpg','_Y7A2878.jpg',
+      '_Y7A2889 1.jpg','_Y7A2911 1.jpg','_Y7A3001.jpg','_Y7A3350.jpg','_Y7A3393.jpg','_Y7A3399.jpg',
+      '_Y7A3768.jpg','_Y7A3933.jpg','_Y7A3979.jpg','_Y7A4183.jpg','_Y7A4649.jpg','_Y7A4651.jpg',
+      '_Y7A4659.jpg','_Y7A4733 1.jpg','_Y7A4928.jpg','_Y7A4944.jpg','_Y7A4966.jpg','_Y7A5016.jpg',
+      '_Y7A5411.jpg','_Y7A5413.jpg','_Y7A7308.jpg','_Y7A7344.jpg','_Y7A7756.jpg','_Y7A7915 1.jpg',
+      '_Y7A7936 1.jpg','_Y7A7941 1.jpg','_Y7A8806.jpg','_Y7A9090.jpg','_Y7A9314.jpg','_Y7A9414.jpg',
+      'roma BBBB 2.37_RJ (2).jpg'
+    ].sort(() => Math.random() - 0.5);
+
+    const shA = document.getElementById('sh-a');
+    const shB = document.getElementById('sh-b');
+    const shFlash = document.getElementById('sh-flash');
+    let shAktiv = shA, shNaechst = shB, shIdx = 0;
+    function shShow(src) {
+      shNaechst.style.backgroundImage = `url('img/wedding/${encodeURIComponent(src)}')`;
+      shFlash.style.transition = 'none'; shFlash.style.opacity = '1';
+      shAktiv.classList.remove('active'); shNaechst.classList.add('active');
+      [shAktiv, shNaechst] = [shNaechst, shAktiv];
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        shFlash.style.transition = 'opacity 0.25s ease'; shFlash.style.opacity = '0';
+      }));
+    }
+    shShow(weddingFiles[0]);
+    setInterval(() => { shIdx = (shIdx + 1) % weddingFiles.length; shShow(weddingFiles[shIdx]); }, 1000);
+
+    const grid = document.getElementById('wedding-grid');
+    weddingFiles.forEach(f => {
+      const div = document.createElement('div');
+      div.className = 'wedding-item';
+      const img = document.createElement('img');
+      img.src = `img/wedding/${encodeURIComponent(f)}`;
+      img.alt = 'Wedding'; img.loading = 'lazy';
+      div.appendChild(img);
+      div.addEventListener('click', () => openLightbox(`img/wedding/${encodeURIComponent(f)}`));
+      grid.appendChild(div);
+    });
+
+    const slideHero = document.getElementById('slide-hero');
+    window.addEventListener('scroll', () => {
+      const n = document.getElementById('main-nav');
+      n.classList.toggle('hero-nav', slideHero.getBoundingClientRect().bottom > 80);
+    });
+  </script>
+</body>
+</html>
