@@ -25,6 +25,7 @@ body {
 /* Logo db bleibt klein */
 .nav-logo { text-transform: none !important; letter-spacing: 0.04em !important; }
 .nav-logo-sub { text-transform: uppercase; letter-spacing: 0.12em; }
+.hero-logo { text-transform: none !important; }
 
 /* Cormorant Garamond Headings — eigenes Spacing */
 h1, h2, h3, .hero-logo, .contact-heading {
@@ -450,15 +451,15 @@ nav.hero-nav .nav-logo-sub {
 /* ── CONTACT STRIP ── */
 .contact-strip {
   text-align: center;
-  padding: 8rem 2.5vw;
+  padding: 5rem 2.5vw;
 }
 
 .contact-strip h2 {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300;
   font-style: italic;
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  margin-bottom: 2rem;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  margin-bottom: 1.5rem;
 }
 
 .contact-strip a {

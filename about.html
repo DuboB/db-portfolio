@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — db by Dubo Bulic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .nav-logo { font-family:'Assistant',sans-serif; font-weight:700; font-size:1.6rem; letter-spacing:0.04em; color:var(--black); text-decoration:none !important; display:flex; align-items:baseline; gap:0.2rem; transition:color 0.3s; }
+    .nav-logo-sub { font-weight:300; font-size:0.7rem; letter-spacing:0.12em; color:rgba(18,18,18,0.5); text-decoration:none !important; }
+    .mobile-menu a { color: var(--black); }
+    @media (max-width: 760px) { .nav-links { display: none; } }
+
+    /* ── ABOUT PAGE ── */
+    .about-page {
+      padding: 8rem 5vw 0;
+      background: #fff;
+    }
+
+    .about-label {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: rgba(18,18,18,0.4);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+      letter-spacing: 0.12em;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 3rem;
+    }
+
+    /* ── PORTRAIT + TEXT SPLIT ── */
+    .about-split {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 6vw;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .about-portrait {
+      width: 280px;
+      height: 360px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .about-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .about-text-col {
+      padding: 0;
+    }
+
+    .about-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.5rem, 2vw, 2rem);
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+      color: var(--black);
+      text-transform: none;
+      margin-bottom: 2rem;
+    }
+
+    .about-body {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--grey);
+      text-transform: none;
+      letter-spacing: 0.03em;
+    }
+
+    .about-body p + p { margin-top: 1.2rem; }
+
+    @media (max-width: 760px) {
+      .about-split { grid-template-columns: 1fr; }
+    }
+
+    /* ── FACTS ── */
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(18,18,18,0.12);
+      margin: 6px -5vw 0;
+    }
+
+    .about-fact {
+      background: #fff;
+      padding: 3.5rem 5vw;
+      text-align: left;
+    }
+
+    .about-fact-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      letter-spacing: 0.04em;
+      color: var(--black);
+      line-height: 1;
+      display: block;
+      text-transform: none;
+    }
+
+    .about-fact-label {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: rgba(18,18,18,0.45);
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    @media (max-width: 760px) {
+      .about-split { grid-template-columns: 1fr; }
+      .about-portrait { aspect-ratio: 4/3; }
+      .about-facts { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
+    <a href="about.html" onclick="closeMenu()" data-i18n="mob_about">About</a>
+    <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
+    <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
+    <a href="architektur.html" onclick="closeMenu()" data-i18n="mob_arch">Architektur</a>
+    <a href="golf.html" onclick="closeMenu()" data-i18n="mob_golf">Golf</a>
+    <a href="wedding.html" onclick="closeMenu()" data-i18n="mob_wedding">Wedding</a>
+    <a href="services.html" onclick="closeMenu()" data-i18n="mob_services">Services</a>
+    <a href="contact.html" onclick="closeMenu()" data-i18n="mob_contact">Contact</a>
+  </div>
+
+  <nav id="main-nav">
+    <div class="nav-left">
+      <a class="nav-logo" href="index.html">db<span class="nav-logo-sub">by DUBO BULIC</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+    </ul>
+    <ul class="nav-right">
+      <li>
+        <div class="lang-switcher">
+          <span class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧</span>
+          <span class="lang-btn" data-lang="de" onclick="setLang('de')">🇩🇪</span>
+        </div>
+      </li>
+      <li><div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div></li>
+    </ul>
+  </nav>
+
+  <!-- ── ABOUT ── -->
+  <div class="about-page">
+    <p class="about-label reveal" data-i18n="about_label">The person behind the lens</p>
+    <h1 class="about-heading reveal" data-i18n="about_heading">About</h1>
+  </div>
+
+  <div class="about-page">
+  <div class="about-split reveal">
+    <div class="about-portrait" style="margin-top:auto;margin-bottom:auto;align-self:center;">
+      <img src="img/about/dubo_portrait.jpeg" alt="Dubo Bulic" />
+    </div>
+    <div class="about-text-col">
+      <p class="about-intro" data-i18n="about_intro">Photography is a mirror of personality.</p>
+      <div class="about-body">
+        <p data-i18n="about_p1">The expressive power of a photograph depends on the photographer — their awareness, their feel for light and shadow, their ability to translate a visual idea into an image.</p>
+        <p data-i18n="about_p2">I look for situations I find compelling: exciting, original, mysterious. Cities, people, interesting environments — even a weathered wall in the right light becomes an image where structure, light and shadow compose into something harmonious.</p>
+        <p data-i18n="about_p3">The rest I leave to the viewer: to sense the mood, perhaps discover a symbol, give it their own meaning.</p>
+        <p data-i18n="about_p4">Photography is like music. It is not just about the instrument. What matters is the moment — the mood, the feeling that stays long after the shutter closes.</p>
+        <p data-i18n="about_p5">For over 20 years I have photographed people, places and moments across Europe. Weddings, concerts, architecture, landscapes — always with one goal: to make the real visible.</p>
+        <p data-i18n="about_p6">My aim has always been to find and present my own stylistic expression — individual, creative, shaped by international experience in and outside of Europe.</p>
+      </div>
+
+      <!-- ── 3 DISZIPLINEN ── -->
+      <div style="margin-top:3rem;display:flex;flex-direction:column;gap:0;">
+
+        <div style="padding:1.4rem 0;border-top:1px solid rgba(18,18,18,0.1);display:grid;grid-template-columns:1fr 2fr;gap:2rem;align-items:start;">
+          <span style="font-family:'Assistant',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;color:var(--black);text-transform:uppercase;" data-i18n="about_d1_title">Photography</span>
+          <span style="font-family:'Assistant',sans-serif;font-size:0.78rem;font-weight:300;line-height:1.7;color:var(--grey);text-transform:none;letter-spacing:0.02em;" data-i18n="about_d1_text">Portrait, architecture, events, concerts, weddings, travel — in Heidelberg, Dubrovnik and across Europe.</span>
+        </div>
+
+        <div style="padding:1.4rem 0;border-top:1px solid rgba(18,18,18,0.1);display:grid;grid-template-columns:1fr 2fr;gap:2rem;align-items:start;">
+          <span style="font-family:'Assistant',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;color:var(--black);text-transform:uppercase;" data-i18n="about_d2_title">Film & Video</span>
+          <span style="font-family:'Assistant',sans-serif;font-size:0.78rem;font-weight:300;line-height:1.7;color:var(--grey);text-transform:none;letter-spacing:0.02em;" data-i18n="about_d2_text">Brand films, social media reels, event and concert videos, drone footage — moving images that tell a story.</span>
+        </div>
+
+        <div style="padding:1.4rem 0;border-top:1px solid rgba(18,18,18,0.1);border-bottom:1px solid rgba(18,18,18,0.1);display:grid;grid-template-columns:1fr 2fr;gap:2rem;align-items:start;">
+          <span style="font-family:'Assistant',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;color:var(--black);text-transform:uppercase;" data-i18n="about_d3_title">Design</span>
+          <span style="font-family:'Assistant',sans-serif;font-size:0.78rem;font-weight:300;line-height:1.7;color:var(--grey);text-transform:none;letter-spacing:0.02em;" data-i18n="about_d3_text">Visual identity, logo, print, web — a consistent image you can present to the world with confidence.</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ── EXHIBITIONS + REFERENCES ── -->
+  <div class="about-cv reveal" style="padding:4vw 5vw;border-top:1px solid rgba(18,18,18,0.1);">
+
+    <!-- Exhibitions -->
+    <div style="display:grid;grid-template-columns:160px 1fr;gap:3rem;margin-bottom:3rem;align-items:start;">
+      <div>
+        <span style="font-family:'Assistant',sans-serif;font-weight:600;font-size:0.6rem;letter-spacing:0.22em;color:rgba(18,18,18,0.4);text-transform:uppercase;" data-i18n="about_ex_title">Exhibitions</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem;">
+        <div>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.8rem;font-weight:400;color:var(--black);text-transform:none;letter-spacing:0.03em;">Dubrovnik — Croatia</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.65rem;font-weight:600;color:rgba(18,18,18,0.38);text-transform:uppercase;letter-spacing:0.18em;margin-top:0.3rem;">March 7 – September 10, 1989</p>
+        </div>
+        <div>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.8rem;font-weight:400;color:var(--black);text-transform:none;letter-spacing:0.03em;">Mannheim</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.65rem;font-weight:600;color:rgba(18,18,18,0.38);text-transform:uppercase;letter-spacing:0.18em;margin-top:0.3rem;">July 17 – October 1, 2007</p>
+        </div>
+        <div>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.8rem;font-weight:400;color:var(--black);text-transform:none;letter-spacing:0.03em;">Heidelberg</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.65rem;font-weight:600;color:rgba(18,18,18,0.38);text-transform:uppercase;letter-spacing:0.18em;margin-top:0.3rem;">April 16 – November 8, 2005</p>
+        </div>
+        <div>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.8rem;font-weight:400;color:var(--black);text-transform:none;letter-spacing:0.03em;">Venezia</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.65rem;font-weight:600;color:rgba(18,18,18,0.38);text-transform:uppercase;letter-spacing:0.18em;margin-top:0.3rem;">May 28 – November 26, 2009</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid rgba(18,18,18,0.1);padding-top:2.5rem;display:grid;grid-template-columns:160px 1fr;gap:3rem;align-items:start;">
+      <div>
+        <span style="font-family:'Assistant',sans-serif;font-weight:600;font-size:0.6rem;letter-spacing:0.22em;color:rgba(18,18,18,0.4);text-transform:uppercase;" data-i18n="about_ref_title">References</span>
+      </div>
+      <div>
+        <p style="font-family:'Assistant',sans-serif;font-size:0.8rem;font-weight:300;line-height:1.9;color:var(--grey);text-transform:none;letter-spacing:0.02em;">SAP, Allianz, Ping, Bang &amp; Olufsen, MLP, Janitos, Golf Club St. Leon Rot, Villa Elita, Grand Villa Argentina, Villa Seherezade, Tanner SE, Deutsche Kinderkrebsstiftung, ORF, Wiener Tageszeitung, Julian Rachlin, Golf Magazin Journal, John Malkovich, Sir Roger Moore, Janine Jansen, Mischa Maisky, Pavel Verikov, Boris Andrianov, Leif Ove Andsnes, Lawrence Power, Udo Jürgens, Harlem Gospel Singers, etc.</p>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div style="border-top:1px solid rgba(18,18,18,0.1);padding-top:3.5rem;margin-top:0;">
+      <p style="font-family:'Assistant',sans-serif;font-size:0.6rem;font-weight:600;letter-spacing:0.22em;color:rgba(18,18,18,0.32);text-transform:uppercase;margin-bottom:2.5rem;" data-i18n="test_label">What people say</p>
+      <div style="display:flex;flex-direction:column;gap:2rem;">
+
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;padding-bottom:2rem;border-bottom:1px solid rgba(18,18,18,0.07);">
+          <p style="font-family:'Assistant',sans-serif;font-size:0.6rem;font-weight:600;letter-spacing:0.15em;color:rgba(18,18,18,0.32);text-transform:uppercase;" data-i18n="test_1_name">— Sandra</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.78rem;font-weight:300;line-height:1.8;color:var(--grey);text-transform:none;font-style:italic;letter-spacing:0.01em;" data-i18n="test_1">"The photos captured exactly the feeling of that day — light, laughter, everything. We look at them and we're right back there."</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;padding-bottom:2rem;border-bottom:1px solid rgba(18,18,18,0.07);">
+          <p style="font-family:'Assistant',sans-serif;font-size:0.6rem;font-weight:600;letter-spacing:0.15em;color:rgba(18,18,18,0.32);text-transform:uppercase;" data-i18n="test_2_name">— Marcus</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.78rem;font-weight:300;line-height:1.8;color:var(--grey);text-transform:none;font-style:italic;letter-spacing:0.01em;" data-i18n="test_2">"Working with Dubo is always effortless. He creates an atmosphere where you forget there's a camera — and somehow that's exactly when the real moments happen."</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;padding-bottom:2rem;border-bottom:1px solid rgba(18,18,18,0.07);">
+          <p style="font-family:'Assistant',sans-serif;font-size:0.6rem;font-weight:600;letter-spacing:0.15em;color:rgba(18,18,18,0.32);text-transform:uppercase;" data-i18n="test_3_name">— Katrin</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.78rem;font-weight:300;line-height:1.8;color:var(--grey);text-transform:none;font-style:italic;letter-spacing:0.01em;" data-i18n="test_3">"Every time we work together it's a genuine pleasure. He has this rare ability to make people feel at ease — and it shows in every single image."</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;">
+          <p style="font-family:'Assistant',sans-serif;font-size:0.6rem;font-weight:600;letter-spacing:0.15em;color:rgba(18,18,18,0.32);text-transform:uppercase;" data-i18n="test_4_name">— Thomas</p>
+          <p style="font-family:'Assistant',sans-serif;font-size:0.78rem;font-weight:300;line-height:1.8;color:var(--grey);text-transform:none;font-style:italic;letter-spacing:0.01em;" data-i18n="test_4">"The atmosphere he creates on set is something special. Calm, focused, and a lot of fun — you always want to do it again."</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="spacer-lg"></div>
+  <div class="contact-strip reveal" id="contact">
+    <h2 data-i18n="contact_h">Let's create<br />something together.</h2>
+    <a href="mailto:dubobulic@gmail.com">dubobulic@gmail.com</a>
+  </div>
+  <div class="spacer-lg"></div>
+
+  <footer>
+    <span data-i18n="footer">© 2026 db by Dubo Bulic</span>
+    <div style="display:flex;gap:2rem;"><a href="#">Impressum</a><a href="#">Privacy</a></div>
+  </footer>
+
+  <script src="shared.js"></script>
+</body>
+</html>

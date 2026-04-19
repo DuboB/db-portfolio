@@ -98,6 +98,19 @@
 
     .srv-list li:first-child { border-top: 1px solid rgba(18,18,18,0.08); }
 
+    .srv-story {
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--grey);
+      text-transform: none;
+      letter-spacing: 0.02em;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(18,18,18,0.08);
+    }
+
     .srv-list li::before {
       content: '—';
       position: absolute;
@@ -192,6 +205,7 @@
   <div class="mobile-overlay" id="mobile-overlay" onclick="closeMenu()"></div>
   <div class="mobile-menu" id="mobile-menu">
     <a href="portfolio.html" onclick="closeMenu()" data-i18n="mob_portfolio">Portfolio</a>
+    <a href="about.html" onclick="closeMenu()" data-i18n="mob_about">About</a>
     <a href="projects.html" onclick="closeMenu()" data-i18n="mob_projects">Projects</a>
     <a href="people.html" onclick="closeMenu()" data-i18n="mob_people">People</a>
     <a href="landscape.html" onclick="closeMenu()" data-i18n="mob_landscape">Landscape</a>
@@ -208,6 +222,7 @@
     </div>
     <ul class="nav-links">
       <li><a href="portfolio.html" data-i18n="nav_portfolio">Portfolio</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
       <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
       <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
       <li><a href="services.html" data-i18n="nav_services">Services</a></li>
@@ -241,41 +256,46 @@
           <li data-i18n="srv1_4">Hochzeit &amp; Feier</li>
           <li data-i18n="srv1_5">Reise &amp; Dokumentation</li>
         </ul>
+        <p class="srv-story" data-i18n="srv1_story">Photography is my foundation. For over 20 years I have worked with light, people and places — always looking for the moment that reveals something true. Whether a quiet portrait or a dynamic event: every image carries a point of view.</p>
       </div>
 
       <div class="srv-box">
         <div class="srv-num">02</div>
-        <p class="srv-name" data-i18n="srv2_name">Design</p>
-        <p class="srv-desc" data-i18n="srv2_desc">Visual identity that works.</p>
+        <p class="srv-name" data-i18n="srv2_name">Personal Branding</p>
+        <p class="srv-desc" data-i18n="srv2_desc">For entrepreneurs, executives and speakers.</p>
         <ul class="srv-list">
-          <li data-i18n="srv2_1">Logo &amp; Corporate Identity</li>
-          <li data-i18n="srv2_2">Print &amp; Editorial</li>
-          <li data-i18n="srv2_3">Web Design</li>
-          <li data-i18n="srv2_4">Social Media</li>
+          <li data-i18n="srv2_new_1">Executive Portrait</li>
+          <li data-i18n="srv2_new_2">Speaker &amp; Presenter</li>
+          <li data-i18n="srv2_new_3">Founder &amp; Entrepreneur</li>
+          <li data-i18n="srv2_new_4">LinkedIn &amp; Press</li>
         </ul>
+        <p class="srv-story" data-i18n="srv2_story">Your image is your first impression — before you enter the room. I create portraits that show who you are, not just how you look. Strong, authentic, with the presence your work deserves.</p>
       </div>
 
       <div class="srv-box">
         <div class="srv-num">03</div>
-        <p class="srv-name" data-i18n="srv3_name">AI Images</p>
-        <p class="srv-desc" data-i18n="srv3_desc">Custom AI-generated visuals for any purpose.</p>
+        <p class="srv-name" data-i18n="srv3_new_name">Corporate Storytelling</p>
+        <p class="srv-desc" data-i18n="srv3_new_desc">Your company. Your people. Your culture.</p>
         <ul class="srv-list">
-          <li data-i18n="srv3_1">Produktvisualisierung</li>
-          <li data-i18n="srv3_2">Konzeptbilder &amp; Storyboards</li>
-          <li data-i18n="srv3_3">Marketing &amp; Social Content</li>
+          <li data-i18n="srv3_new_1">Team &amp; Culture</li>
+          <li data-i18n="srv3_new_2">Office &amp; Location</li>
+          <li data-i18n="srv3_new_3">Events &amp; Launches</li>
+          <li data-i18n="srv3_new_4">Annual Reports &amp; Press</li>
         </ul>
+        <p class="srv-story" data-i18n="srv3_story">Companies have stories worth telling — but most never get the images they deserve. I photograph the people, spaces and moments that make a business what it is. Not polished. Real.</p>
       </div>
 
       <div class="srv-box">
         <div class="srv-num">04</div>
-        <p class="srv-name" data-i18n="srv4_name">Visual Storytelling</p>
-        <p class="srv-desc" data-i18n="srv4_desc">Moving images that tell your story.</p>
+        <p class="srv-name" data-i18n="srv4_new_name">Brand Photography</p>
+        <p class="srv-desc" data-i18n="srv4_new_desc">Apartments, architecture, products, atmosphere.</p>
         <ul class="srv-list">
-          <li data-i18n="srv4_1">Imagefilm &amp; Imagevideo</li>
-          <li data-i18n="srv4_2">Reels &amp; Social Content</li>
-          <li data-i18n="srv4_3">Konzert &amp; Event Video</li>
-          <li data-i18n="srv4_4">Drone &amp; Aerial</li>
+          <li data-i18n="srv4_new_1">Architektur &amp; Immobilien</li>
+          <li data-i18n="srv4_new_2">Produkte &amp; Still Life</li>
+          <li data-i18n="srv4_new_3">Gastronomie &amp; Hospitality</li>
+          <li data-i18n="srv4_new_4">Visual Storytelling / Film</li>
         </ul>
+        <p class="srv-story" data-i18n="srv4_story">A space photographed well sells faster. A product shown beautifully is chosen first. I create imagery that communicates quality — for brands that want to be seen in the right light.</p>
       </div>
 
     </div>
